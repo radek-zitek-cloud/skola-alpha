@@ -22,6 +22,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Create Prometheus registry and metrics at module level so they persist across requests
+_metrics_registry = CollectorRegistry()
+_uptime_gauge = Gauge(
+    "app_uptime_seconds",
+    "Application uptime in seconds",
+    registry=_metrics_registry,
+)
+_start_time = time.time()
+
 
 @app.get("/health", tags=["ops"])
 def health():
