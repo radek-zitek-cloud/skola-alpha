@@ -11,6 +11,9 @@ from prometheus_client import (
 
 app = FastAPI(title="skola-alpha API", version="0.1.0")
 
+# Store application start time for uptime calculation
+_start_time = time.time()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
@@ -38,8 +41,14 @@ def health():
 @app.get("/metrics", tags=["ops"])
 def metrics():
     """Expose Prometheus metrics with a simple uptime gauge."""
-    _uptime_gauge.set(time.time() - _start_time)
-    payload = generate_latest(_metrics_registry)
+    registry = CollectorRegistry()
+    uptime = Gauge(
+        "app_uptime_seconds",
+        "Application uptime in seconds",
+        registry=registry,
+    )
+    uptime.set(time.time() - _start_time)
+    payload = generate_latest(registry)
     return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
 
