@@ -1,3 +1,5 @@
+import time
+
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import (
@@ -17,6 +19,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# Create Prometheus registry and metrics at module level so they persist across requests
+_metrics_registry = CollectorRegistry()
+_uptime_gauge = Gauge(
+    "app_uptime_seconds",
+    "Application uptime in seconds",
+    registry=_metrics_registry,
+)
+_start_time = time.time()
+
 
 @app.get("/health", tags=["ops"])
 def health():
@@ -27,14 +38,8 @@ def health():
 @app.get("/metrics", tags=["ops"])
 def metrics():
     """Expose Prometheus metrics with a simple uptime gauge."""
-    registry = CollectorRegistry()
-    uptime = Gauge(
-        "app_uptime_seconds",
-        "Application uptime in seconds",
-        registry=registry,
-    )
-    uptime.set_to_current_time()
-    payload = generate_latest(registry)
+    _uptime_gauge.set(time.time() - _start_time)
+    payload = generate_latest(_metrics_registry)
     return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
 
