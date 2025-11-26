@@ -205,3 +205,20 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ----- MINE ------
+# Database
+*.db
+*.sqlite3
+postgres_data/  # Just in case you accidentally created a local folder
+
+# Logs
+logs/*
+!logs/.gitkeep  # Keep the folder structure, ignore the content
+*.log
+
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/

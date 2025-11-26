@@ -1,2 +1,7 @@
-# skola-alpha
-This is web app to help and motivate my son with his school work.
+# Skola
+
+This is web app to motivate and help my son with his school work.
+
+## Quick Notes
+
+- database: sqlite3
