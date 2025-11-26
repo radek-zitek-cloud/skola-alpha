@@ -1,3 +1,5 @@
+import time
+
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import (
@@ -8,6 +10,9 @@ from prometheus_client import (
 )
 
 app = FastAPI(title="skola-alpha API", version="0.1.0")
+
+# Store application start time for uptime calculation
+_start_time = time.time()
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,7 +38,7 @@ def metrics():
         "Application uptime in seconds",
         registry=registry,
     )
-    uptime.set_to_current_time()
+    uptime.set(time.time() - _start_time)
     payload = generate_latest(registry)
     return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
