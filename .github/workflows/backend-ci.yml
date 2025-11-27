@@ -51,7 +51,6 @@ jobs:
 
       - name: Run Ruff linter
         run: |
-          uv pip install ruff
           uv run ruff check app tests
         continue-on-error: true
 
