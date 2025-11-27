@@ -41,6 +41,9 @@ jobs:
           elif [[ "${{ needs.backend-ci.result }}" == "success" && "${{ needs.frontend-ci.result }}" == "skipped" ]]; then
             echo "✅ Backend CI checks passed (Frontend skipped)!"
             exit 0
+          elif [[ "${{ needs.backend-ci.result }}" == "skipped" && "${{ needs.frontend-ci.result }}" == "skipped" ]]; then
+            echo "✅ No CI checks needed (both skipped - no backend/frontend changes)!"
+            exit 0
           else
             echo "❌ Some CI checks failed"
             echo "Backend: ${{ needs.backend-ci.result }}"
