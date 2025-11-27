@@ -1,3 +1,4 @@
+import logging
 import time
 
 from fastapi import FastAPI, Response
@@ -11,6 +12,13 @@ from prometheus_client import (
 
 from app.database import Base, engine
 from app.routers import router
+
+# Configure logging
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+)
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="skola-alpha API", version="0.1.0")
 
