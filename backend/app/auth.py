@@ -1,5 +1,6 @@
 """Authentication utilities and JWT handling."""
 
+import logging
 import os
 from datetime import datetime, timedelta
 from typing import Optional
@@ -12,6 +13,8 @@ from sqlalchemy.orm import Session
 from app.database import get_db
 from app.models import User
 from app.schemas import TokenData
+
+logger = logging.getLogger(__name__)
 
 # JWT Configuration
 SECRET_KEY = os.getenv("SECRET_KEY", "your-secret-key-change-this-in-production")
@@ -40,6 +43,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -
 
 def verify_token(token: str) -> TokenData:
     """Verify JWT token and return token data."""
+    logger.debug(f"Verifying token: {token[:20] if token else 'None'}...")
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -47,13 +51,17 @@ def verify_token(token: str) -> TokenData:
     )
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        logger.debug(f"Token payload: {payload}")
         user_id: int = payload.get("sub")
         email: str = payload.get("email")
+        logger.debug(f"Extracted user_id: {user_id}, email: {email}")
         if user_id is None:
+            logger.error("user_id is None in token payload")
             raise credentials_exception
         token_data = TokenData(user_id=user_id, email=email)
         return token_data
-    except JWTError:
+    except JWTError as e:
+        logger.error(f"JWT decode error: {e}")
         raise credentials_exception
 
 
@@ -62,12 +70,18 @@ def get_current_user(
     db: Session = Depends(get_db),
 ) -> User:
     """Get current authenticated user from JWT token."""
+    logger.debug("=== get_current_user called ===")
+    logger.debug(f"Credentials: {credentials}")
     token = credentials.credentials
+    logger.debug(f"Extracted token: {token[:20] if token else 'None'}...")
     token_data = verify_token(token)
+    logger.debug(f"Token verified, looking up user_id: {token_data.user_id}")
     user = db.query(User).filter(User.id == token_data.user_id).first()
     if user is None:
+        logger.error(f"User not found for user_id: {token_data.user_id}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="User not found",
         )
+    logger.debug(f"User found: {user.id}, {user.email}")
     return user

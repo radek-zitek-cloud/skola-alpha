@@ -15,20 +15,26 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
 
+    console.log("[Login] useEffect - checking for auth code in URL");
+    console.log("[Login] Code found:", code ? code.substring(0, 20) + "..." : "none");
+    console.log("[Login] hasProcessedCode:", hasProcessedCode.current);
+
     // Prevent processing the same code multiple times (e.g., in React Strict Mode)
     if (code && !hasProcessedCode.current) {
       hasProcessedCode.current = true;
+      console.log("[Login] Processing auth code...");
       // Use origin only, without pathname to avoid trailing slash issues
       const redirectUri = window.location.origin;
 
       login(code, redirectUri)
         .then(() => {
+          console.log("[Login] Login successful, clearing URL");
           // Clear the code from URL
           window.history.replaceState({}, document.title, window.location.pathname);
           onSuccess?.();
         })
         .catch((error) => {
-          console.error("OAuth login failed:", error);
+          console.error("[Login] OAuth login failed:", error);
           hasProcessedCode.current = false; // Allow retry on error
         });
     }
@@ -36,14 +42,12 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      // Use origin only, without pathname to avoid trailing slash issues
-      const redirectUri = window.location.origin;
-      login(codeResponse.code, redirectUri).catch((error) => {
-        console.error("OAuth login failed:", error);
-      });
+      console.log("[Login] onSuccess callback called", codeResponse);
+      // When using auth-code flow with redirect, the useEffect handles the code
+      // This callback should not be needed, but we'll add logging just in case
     },
-    onError: () => {
-      console.error("Google login failed");
+    onError: (error) => {
+      console.error("[Login] Google login failed:", error);
     },
     flow: "auth-code",
     redirect_uri: window.location.origin,
