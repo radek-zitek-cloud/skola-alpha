@@ -1,6 +1,8 @@
 import logging
 import time
+from pathlib import Path
 
+from dotenv import load_dotenv
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import (
@@ -12,6 +14,10 @@ from prometheus_client import (
 
 from app.database import Base, engine
 from app.routers import router
+
+# Load environment variables from .env file
+env_path = Path(__file__).parent.parent / ".env"
+load_dotenv(dotenv_path=env_path)
 
 # Configure logging
 logging.basicConfig(

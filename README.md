@@ -88,6 +88,8 @@ All CI checks run automatically on:
 
 - [`docs/AGENTS.md`](docs/AGENTS.md) - Contributor guidelines and project conventions
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) - Detailed architecture documentation
+- [`docs/AUTHENTICATION_ARCHITECTURE.md`](docs/AUTHENTICATION_ARCHITECTURE.md) - Authentication system architecture
+- [`docs/GOOGLE_OAUTH_SETUP.md`](docs/GOOGLE_OAUTH_SETUP.md) - **Google OAuth2 setup guide (required for login)**
 - [`docs/CI_CD_GUIDE.md`](docs/CI_CD_GUIDE.md) - CI/CD workflow guide for newcomers
 - [`docs/CHANGELOG.md`](docs/CHANGELOG.md) - Project change history
 - [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) - Contributing guidelines
@@ -95,10 +97,13 @@ All CI checks run automatically on:
 
 ## Environment Configuration
 
-Copy `.env.example` files and configure as needed:
+The application requires environment variables to be configured for proper operation.
 
-- Backend: `cp backend/.env.example backend/.env`
-- Frontend: `cp frontend/.env.example frontend/.env`
+**Backend `.env` file has been created** from the template, but you need to add your Google OAuth credentials:
+
+1. Follow the **[Google OAuth Setup Guide](docs/GOOGLE_OAUTH_SETUP.md)** to obtain credentials
+2. Edit `backend/.env` and add your `GOOGLE_CLIENT_ID` and `GOOGLE_CLIENT_SECRET`
+3. Frontend: `cp frontend/.env.example frontend/.env` and add the same `GOOGLE_CLIENT_ID`
 
 See the `.env.example` files for all available configuration options.
 
