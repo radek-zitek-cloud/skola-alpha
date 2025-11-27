@@ -86,10 +86,12 @@ All CI checks run automatically on:
 
 ## Documentation
 
-- [`AGENTS.md`](AGENTS.md) - Contributor guidelines and project conventions
+- [`docs/AGENTS.md`](docs/AGENTS.md) - Contributor guidelines and project conventions
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) - Detailed architecture documentation
 - [`docs/CI_CD_GUIDE.md`](docs/CI_CD_GUIDE.md) - CI/CD workflow guide for newcomers
-- [`CHANGELOG.md`](CHANGELOG.md) - Project change history
+- [`docs/CHANGELOG.md`](docs/CHANGELOG.md) - Project change history
+- [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) - Contributing guidelines
+- [`docs/CODE_REVIEW_SUMMARY.md`](docs/CODE_REVIEW_SUMMARY.md) - Code review summary
 
 ## Environment Configuration
 
@@ -117,5 +119,5 @@ skola-alpha/
 
 - Default dev DB: sqlite3 (placeholder; not yet wired)
 - Build tools: uv (Python), Vite (frontend)
-- See `AGENTS.md` for detailed contributor guidance
+- See `docs/AGENTS.md` for detailed contributor guidance
   
