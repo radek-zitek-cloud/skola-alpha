@@ -9,7 +9,13 @@ from prometheus_client import (
     generate_latest,
 )
 
+from app.database import Base, engine
+from app.routers import router
+
 app = FastAPI(title="skola-alpha API", version="0.1.0")
+
+# Create database tables
+Base.metadata.create_all(bind=engine)
 
 # Store application start time for uptime calculation
 _start_time = time.time()
@@ -17,10 +23,13 @@ _start_time = time.time()
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
-    allow_credentials=False,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# Include authentication router
+app.include_router(router)
 
 # Create Prometheus registry and metrics at module level so they persist across requests
 _metrics_registry = CollectorRegistry()
