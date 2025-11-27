@@ -52,11 +52,17 @@ def verify_token(token: str) -> TokenData:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         logger.debug(f"Token payload: {payload}")
-        user_id: int = payload.get("sub")
+        user_id_str: str = payload.get("sub")
         email: str = payload.get("email")
-        logger.debug(f"Extracted user_id: {user_id}, email: {email}")
-        if user_id is None:
+        logger.debug(f"Extracted user_id (string): {user_id_str}, email: {email}")
+        if user_id_str is None:
             logger.error("user_id is None in token payload")
+            raise credentials_exception
+        # Convert user_id from string back to int
+        try:
+            user_id = int(user_id_str)
+        except (ValueError, TypeError):
+            logger.error(f"Failed to convert user_id to int: {user_id_str}")
             raise credentials_exception
         token_data = TokenData(user_id=user_id, email=email)
         return token_data

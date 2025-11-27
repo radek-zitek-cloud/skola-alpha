@@ -118,9 +118,10 @@ async def google_auth(auth_request: GoogleAuthRequest, db: Session = Depends(get
         logger.debug(f"User saved with ID: {user.id}")
 
         # Create JWT token
+        # Note: JWT spec requires 'sub' to be a string, so convert user.id to string
         access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
         jwt_token = create_access_token(
-            data={"sub": user.id, "email": user.email},
+            data={"sub": str(user.id), "email": user.email},
             expires_delta=access_token_expires,
         )
 
