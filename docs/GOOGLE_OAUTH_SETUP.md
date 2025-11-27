@@ -68,6 +68,7 @@ This guide walks you through setting up Google OAuth2 authentication for the sko
      - Click **"+ Add URI"**
      - Add: `http://localhost:5173` (for local development)
      - Add: `http://127.0.0.1:5173` (alternative local URL)
+     - **Note**: Do NOT add trailing slashes (e.g., avoid `http://localhost:5173/`)
      - For production, add your production domain (e.g., `https://yourdomain.com`)
 6. Click **"Create"**
 7. A dialog will appear with your credentials:
@@ -155,7 +156,9 @@ This error means the redirect URI in your request doesn't match the ones configu
 - Go to Google Cloud Console > APIs & Services > Credentials
 - Click on your OAuth 2.0 Client ID
 - Verify that the **Authorized redirect URIs** include the exact URL you're using (e.g., `http://localhost:5173`)
-- Make sure there are no trailing slashes or typos
+- **Important**: Make sure there are NO trailing slashes (use `http://localhost:5173`, NOT `http://localhost:5173/`)
+- Check for typos and ensure the protocol (http/https), domain, and port match exactly
+- If you recently updated the URIs, wait a few minutes for changes to propagate
 
 ### "Error 401: invalid_client"
 

@@ -18,7 +18,8 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
     // Prevent processing the same code multiple times (e.g., in React Strict Mode)
     if (code && !hasProcessedCode.current) {
       hasProcessedCode.current = true;
-      const redirectUri = `${window.location.origin}${window.location.pathname}`;
+      // Use origin only, without pathname to avoid trailing slash issues
+      const redirectUri = window.location.origin;
 
       login(code, redirectUri)
         .then(() => {
@@ -35,7 +36,8 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      const redirectUri = `${window.location.origin}${window.location.pathname}`;
+      // Use origin only, without pathname to avoid trailing slash issues
+      const redirectUri = window.location.origin;
       login(codeResponse.code, redirectUri).catch((error) => {
         console.error("OAuth login failed:", error);
       });
@@ -44,6 +46,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
       console.error("Google login failed");
     },
     flow: "auth-code",
+    redirect_uri: window.location.origin,
   });
 
   return (
