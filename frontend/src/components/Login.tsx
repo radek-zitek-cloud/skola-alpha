@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGoogleLogin } from "@react-oauth/google";
 import { useAuth } from "../AuthContext";
 
@@ -8,14 +8,18 @@ interface LoginProps {
 
 export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
   const { login } = useAuth();
+  const hasProcessedCode = useRef(false);
 
   useEffect(() => {
     // Check if we're returning from Google OAuth with a code
     const params = new URLSearchParams(window.location.search);
     const code = params.get("code");
 
-    if (code) {
+    // Prevent processing the same code multiple times (e.g., in React Strict Mode)
+    if (code && !hasProcessedCode.current) {
+      hasProcessedCode.current = true;
       const redirectUri = `${window.location.origin}${window.location.pathname}`;
+
       login(code, redirectUri)
         .then(() => {
           // Clear the code from URL
@@ -24,6 +28,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         })
         .catch((error) => {
           console.error("OAuth login failed:", error);
+          hasProcessedCode.current = false; // Allow retry on error
         });
     }
   }, [login, onSuccess]);
