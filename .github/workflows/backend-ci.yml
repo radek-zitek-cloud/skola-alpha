@@ -46,7 +46,6 @@ jobs:
 
       - name: Check code formatting with Black
         run: |
-          uv pip install black
           uv run black --check app tests
         continue-on-error: true
 
