@@ -2,7 +2,19 @@ import logging
 import time
 from pathlib import Path
 
+import os
+
 from dotenv import load_dotenv
+
+# Load environment variables from .env file BEFORE importing app modules
+# This ensures all modules can access env vars when they're imported
+env_path = Path(__file__).parent.parent / ".env"
+print(f"Loading .env from: {env_path}")
+print(f".env file exists: {env_path.exists()}")
+load_dotenv(dotenv_path=env_path)
+print(f"GOOGLE_CLIENT_ID after load: {os.getenv('GOOGLE_CLIENT_ID', 'NOT SET')[:20] if os.getenv('GOOGLE_CLIENT_ID') else 'NOT SET'}...")
+print(f"GOOGLE_CLIENT_SECRET after load: {os.getenv('GOOGLE_CLIENT_SECRET', 'NOT SET')[:20] if os.getenv('GOOGLE_CLIENT_SECRET') else 'NOT SET'}...")
+
 from fastapi import FastAPI, Response
 from fastapi.middleware.cors import CORSMiddleware
 from prometheus_client import (
@@ -14,10 +26,6 @@ from prometheus_client import (
 
 from app.database import Base, engine
 from app.routers import router
-
-# Load environment variables from .env file
-env_path = Path(__file__).parent.parent / ".env"
-load_dotenv(dotenv_path=env_path)
 
 # Configure logging
 logging.basicConfig(
