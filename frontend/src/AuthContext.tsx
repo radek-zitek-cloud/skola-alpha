@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect, useState, ReactNode } from "react";
+import React, { createContext, useContext, useEffect, useState, useCallback, ReactNode } from "react";
 import { authService } from "./authService";
 import type { User, Theme } from "./types";
 
@@ -60,21 +60,24 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     }
   }, []);
 
-  const login = async (code: string, redirectUri: string) => {
+  const login = useCallback(async (code: string, redirectUri: string) => {
     try {
+      setIsLoading(true);
       const authResponse = await authService.exchangeCodeForToken(code, redirectUri);
       const userData = await authService.getCurrentUser(authResponse.access_token);
 
+      localStorage.setItem("auth_token", authResponse.access_token);
       setToken(authResponse.access_token);
       setUser(userData);
-      localStorage.setItem("auth_token", authResponse.access_token);
     } catch (error) {
       console.error("Login failed:", error);
       throw error;
+    } finally {
+      setIsLoading(false);
     }
-  };
+  }, []);
 
-  const logout = async () => {
+  const logout = useCallback(async () => {
     if (token) {
       try {
         await authService.logout(token);
@@ -86,13 +89,13 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setUser(null);
     setToken(null);
     localStorage.removeItem("auth_token");
-  };
+  }, [token]);
 
-  const toggleTheme = () => {
+  const toggleTheme = useCallback(() => {
     const newTheme = theme === "light" ? "dark" : "light";
     setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-  };
+  }, [theme]);
 
   return (
     <AuthContext.Provider value={{ user, token, theme, isLoading, login, logout, toggleTheme }}>
