@@ -54,6 +54,4 @@ def test_metrics_uptime_is_elapsed_time():
 
     # Unix timestamps would be ~1.7 billion seconds (since 1970)
     # Reasonable test uptime should be well under the max test uptime threshold
-    assert uptime < _MAX_TEST_UPTIME_SECONDS, (
-        f"Uptime {uptime} looks like Unix timestamp, not elapsed time"
-    )
+    assert uptime < _MAX_TEST_UPTIME_SECONDS, f"Uptime {uptime} looks like Unix timestamp, not elapsed time"
