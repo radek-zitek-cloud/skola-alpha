@@ -15,7 +15,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
     const code = params.get("code");
 
     if (code) {
-      const redirectUri = `${window.location.origin}${window.location.pathname}`;
+      const redirectUri = window.location.origin;
       login(code, redirectUri)
         .then(() => {
           // Clear the code from URL
@@ -30,7 +30,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
 
   const handleGoogleLogin = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      const redirectUri = `${window.location.origin}${window.location.pathname}`;
+      const redirectUri = window.location.origin;
       login(codeResponse.code, redirectUri).catch((error) => {
         console.error("OAuth login failed:", error);
       });
@@ -39,6 +39,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
       console.error("Google login failed");
     },
     flow: "auth-code",
+    redirect_uri: window.location.origin,
   });
 
   return (
