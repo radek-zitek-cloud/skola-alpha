@@ -103,7 +103,7 @@ This guide walks you through setting up Google OAuth2 authentication for the sko
 
 1. Navigate to the frontend directory: `cd ../frontend`
 2. Copy the example environment file:
-   ```bash
+   ```bash 
    cp .env.example .env
    ```
 3. Edit the `.env` file and add your Google Client ID:

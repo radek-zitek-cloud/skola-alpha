@@ -11,6 +11,7 @@ Skola Alpha is a full-stack web application with a FastAPI backend and React/Vit
 ### Backend (FastAPI)
 
 **Setup:**
+
 ```bash
 cd backend
 uv venv
@@ -19,12 +20,14 @@ uv sync --all-extras
 ```
 
 **Run server:**
+
 ```bash
 cd backend
 uv run uvicorn app.main:app --reload --host localhost --port 8000
 ```
 
 **Testing:**
+
 ```bash
 cd backend
 uv run pytest                    # Run all tests
@@ -33,6 +36,7 @@ uv run pytest --cov=app         # With coverage
 ```
 
 **Code quality:**
+
 ```bash
 cd backend
 uv run black app tests          # Format code
@@ -41,12 +45,14 @@ uv run flake8 app tests         # Additional linting
 ```
 
 **Dependencies:**
+
 - Update dependencies in `pyproject.toml`, then run `uv lock` to regenerate the lock file
 - Use `uv sync` to install dependencies from the lock file
 
 ### Frontend (React/Vite)
 
 **Setup & Run:**
+
 ```bash
 cd frontend
 npm install
@@ -54,6 +60,7 @@ npm run dev                      # Development server (default: http://localhost
 ```
 
 **Testing:**
+
 ```bash
 cd frontend
 npm test                         # Run tests with Vitest
@@ -61,6 +68,7 @@ npm test -- --coverage          # With coverage
 ```
 
 **Code quality:**
+
 ```bash
 cd frontend
 npm run lint                     # Lint with ESLint
@@ -70,6 +78,7 @@ npm run format:check            # Check formatting only
 ```
 
 **Build:**
+
 ```bash
 cd frontend
 npm run build                    # TypeScript compilation + Vite build
@@ -82,7 +91,7 @@ npm run preview                  # Preview production build
 
 This is a monorepo with backend and frontend in separate directories at the root level:
 
-```
+``` shell
 skola-alpha/
 ├── backend/          # FastAPI Python service
 │   ├── app/         # Application code (main.py is entry point)
@@ -98,6 +107,7 @@ skola-alpha/
 **Current state:** Minimal FastAPI app with health check and Prometheus metrics.
 
 **Planned structure** (per docs/ARCHITECTURE.md):
+
 - `app/api/` - Route handlers (endpoints)
 - `app/core/` - Config, Security, Database setup
 - `app/models/` - SQLAlchemy Database Models
@@ -106,6 +116,7 @@ skola-alpha/
 - `alembic/` - Database migrations (when added)
 
 **Key patterns:**
+
 - Entry point is `app/main.py` with FastAPI app initialization
 - CORS configured for `localhost:5173` (Vite default port)
 - Prometheus metrics exposed at `/metrics` endpoint
@@ -117,6 +128,7 @@ skola-alpha/
 **Current state:** Single-component app that checks backend health status.
 
 **Planned structure:**
+
 - `src/components/` - React components
 - `src/pages/` - Page components
 - `src/services/` - API calls (axios/fetch wrappers)
@@ -124,6 +136,7 @@ skola-alpha/
 - `src/assets/` - Static assets
 
 **Key patterns:**
+
 - API base URL configured via `VITE_API_BASE_URL` environment variable (defaults to `http://localhost:8000`)
 - Uses Vite for fast development and optimized builds
 - Testing with Vitest and React Testing Library
@@ -131,12 +144,14 @@ skola-alpha/
 ### Development vs Production
 
 **Development (Terminal Mode):**
+
 - Backend runs on `localhost:8000` via uvicorn
 - Frontend runs on `localhost:5173` via Vite
 - Database: SQLite locally or Docker Postgres via `docker-compose.dev.yml`
 - CORS allows requests from `localhost:5173`
 
 **Production (Docker Mode):**
+
 - Traefik acts as reverse proxy on ports 80/443
 - Backend container accessed via `/api` path prefix
 - Frontend container serves static build via Nginx
@@ -180,6 +195,7 @@ skola-alpha/
 GitHub Actions workflows run on push to `main`, `develop`, or `claude/**` branches, and on PRs to `main` or `develop`.
 
 **Workflows:**
+
 - `backend-ci.yml` - Linting (Flake8, Black, Ruff), tests, coverage
 - `frontend-ci.yml` - Linting (ESLint), formatting (Prettier), type checking, tests, build
 - `ci.yml` - Orchestrates both workflows and reports overall status
@@ -187,11 +203,13 @@ GitHub Actions workflows run on push to `main`, `develop`, or `claude/**` branch
 ## Environment Configuration
 
 **Backend:**
+
 - Copy `backend/.env.example` to `backend/.env`
 - Configure database URL (switch between `localhost` and Docker service names)
 - Use pydantic-settings to load env vars
 
 **Frontend:**
+
 - Copy `frontend/.env.example` to `frontend/.env`
 - Set `VITE_API_BASE_URL` if backend is not on `localhost:8000`
 
@@ -206,11 +224,13 @@ GitHub Actions workflows run on push to `main`, `develop`, or `claude/**` branch
 ## Git Workflow
 
 **Commits:**
+
 - Concise, present-tense subjects
 - Group logical units
 - Examples: `feat: add study plan model`, `fix: handle empty progress list`
 
 **Pull Requests:**
+
 - Include summary, linked issue, verification steps
 - List tests run and known gaps
 - Add screenshots/GIFs for UI changes

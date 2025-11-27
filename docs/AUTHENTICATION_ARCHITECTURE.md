@@ -17,6 +17,7 @@ This document describes the authentication and database architecture implemented
 ## Overview
 
 The skola-alpha application implements a modern authentication system using:
+
 - **Google OAuth2** for user authentication
 - **JWT tokens** for session management
 - **SQLAlchemy** ORM with **Alembic** migrations for database management
@@ -35,6 +36,7 @@ The skola-alpha application implements a modern authentication system using:
 ## Technology Stack
 
 ### Backend
+
 - **Framework**: FastAPI (Python 3.12+)
 - **Database**: SQLite (development) / PostgreSQL (production)
 - **ORM**: SQLAlchemy 2.0+
@@ -46,6 +48,7 @@ The skola-alpha application implements a modern authentication system using:
 - **HTTP Client**: `httpx` - For Google API calls
 
 ### Frontend
+
 - **Framework**: React 18.3+ with TypeScript
 - **Build Tool**: Vite 5.0+
 - **OAuth Library**: `@react-oauth/google`
@@ -53,7 +56,7 @@ The skola-alpha application implements a modern authentication system using:
 
 ## Architecture Diagram
 
-```
+``` shell
 ┌─────────────────────────────────────────────────────────────────┐
 │                           Frontend                              │
 │  ┌──────────────────────────────────────────────────────────┐   │
@@ -169,7 +172,7 @@ alembic downgrade -1
 
 ### 1. Initial Login Flow
 
-```
+``` shell
 ┌──────────┐                                     ┌──────────┐
 │          │  1. Click "Sign in with Google"     │          │
 │  User    ├────────────────────────────────────▶│ Frontend │
@@ -255,7 +258,7 @@ alembic downgrade -1
 
 ### 2. Subsequent Page Loads
 
-```
+``` shell
 ┌──────────┐                                     ┌──────────┐
 │          │  1. Load page                       │          │
 │  User    ├────────────────────────────────────▶│ Frontend │
@@ -296,7 +299,7 @@ alembic downgrade -1
 
 ### 3. Logout Flow
 
-```
+``` shell
 ┌──────────┐                                     ┌──────────┐
 │          │  1. Click "Logout"                  │          │
 │  User    ├────────────────────────────────────▶│ Frontend │
@@ -326,7 +329,7 @@ alembic downgrade -1
 
 ### File Structure
 
-```
+``` shell
 backend/
 ├── app/
 │   ├── __init__.py
@@ -348,17 +351,20 @@ backend/
 ### Key Backend Files
 
 #### `app/database.py`
+
 - Creates SQLAlchemy engine
 - Defines `SessionLocal` for DB sessions
 - Provides `get_db()` dependency for FastAPI
 - Supports both SQLite and PostgreSQL
 
 #### `app/models.py`
+
 - Defines `User` model
 - Maps to `users` table in database
 - Includes timestamps (created_at, updated_at)
 
 #### `app/schemas.py`
+
 - Pydantic models for request/response validation
 - `UserResponse` - API response format
 - `GoogleAuthRequest` - OAuth code exchange request
@@ -366,12 +372,14 @@ backend/
 - `TokenData` - JWT payload structure
 
 #### `app/auth.py`
+
 - `create_access_token()` - Generates JWT tokens
 - `verify_token()` - Validates JWT tokens
 - `get_current_user()` - FastAPI dependency for protected routes
 - Loads Google OAuth credentials from environment
 
 #### `app/routers.py`
+
 - `POST /auth/google` - Exchange OAuth code for JWT
   1. Exchanges authorization code with Google
   2. Fetches user info from Google
@@ -381,6 +389,7 @@ backend/
 - `POST /auth/logout` - Logout endpoint
 
 #### `app/main.py`
+
 - Initializes FastAPI application
 - Configures CORS middleware (with credentials enabled)
 - Creates database tables on startup
@@ -407,7 +416,9 @@ frontend/src/
 ### Key Frontend Files
 
 #### `AuthContext.tsx`
+
 React Context providing:
+
 - `user` - Current user object or null
 - `token` - JWT token or null
 - `theme` - Current theme (light/dark)
@@ -417,16 +428,20 @@ React Context providing:
 - `toggleTheme()` - Switch theme
 
 Persists to localStorage:
+
 - `auth_token` - JWT token
 - `theme` - User's theme preference
 
 #### `authService.ts`
+
 API client methods:
+
 - `exchangeCodeForToken()` - POST /auth/google
 - `getCurrentUser()` - GET /auth/me
 - `logout()` - POST /auth/logout
 
 #### `components/Login.tsx`
+
 - Displays Google OAuth button
 - Uses `@react-oauth/google` library
 - Configured for authorization code flow
@@ -434,6 +449,7 @@ API client methods:
 - Extracts code from URL and exchanges for token
 
 #### `components/UserProfile.tsx`
+
 - Fixed header bar
 - Shows user avatar and name
 - Theme toggle button (🌞/🌙)
@@ -441,18 +457,21 @@ API client methods:
 - Adapts to light/dark theme
 
 #### `components/Dashboard.tsx`
+
 - Main content area
 - Displays backend health status
 - Adapts to light/dark theme
 - Shows /health endpoint result
 
 #### `App.tsx`
+
 - Root component
 - Shows loading state during initial auth check
 - Renders `<Login>` if not authenticated
 - Renders `<UserProfile>` + `<Dashboard>` if authenticated
 
 #### `main.tsx`
+
 - Entry point
 - Wraps app with `GoogleOAuthProvider`
 - Wraps app with `AuthProvider`
@@ -463,22 +482,27 @@ API client methods:
 ### ✅ Implemented Security Features
 
 1. **JWT Token Expiration**
+
    - Tokens expire after 30 minutes (configurable)
    - Prevents long-term token abuse
 
 2. **HTTPS in Production**
+
    - OAuth requires HTTPS for production
    - Protects tokens in transit
 
 3. **CORS Configuration**
+
    - Restricts API access to specific origins
    - Credentials enabled for authenticated requests
 
 4. **Token Storage**
+
    - Stored in localStorage (client-side)
    - Cleared on logout
 
 5. **Database Indexing**
+
    - Indexed columns for performance
    - Unique constraints on email and google_id
 
@@ -489,25 +513,31 @@ API client methods:
 ### 🔒 Future Security Enhancements
 
 1. **Token Blacklisting**
+
    - Maintain list of invalidated tokens
    - Use Redis for fast lookups
 
 2. **Refresh Tokens**
+
    - Implement refresh token rotation
    - Shorter access token expiration
 
 3. **Rate Limiting**
+
    - Prevent brute force attacks
    - Limit authentication attempts
 
 4. **CSRF Protection**
+
    - Add CSRF tokens for state-changing operations
 
 5. **Session Monitoring**
+
    - Track active sessions
    - Detect suspicious activity
 
 6. **Secure Cookies**
+
    - Move tokens from localStorage to httpOnly cookies
    - Prevents XSS token theft
 
@@ -520,9 +550,11 @@ API client methods:
 ### Authentication Endpoints
 
 #### `POST /auth/google`
+
 Exchange Google OAuth authorization code for JWT token.
 
 **Request**:
+
 ```json
 {
   "code": "4/0AfJohXk...",
@@ -531,6 +563,7 @@ Exchange Google OAuth authorization code for JWT token.
 ```
 
 **Response** (200 OK):
+
 ```json
 {
   "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
@@ -539,20 +572,24 @@ Exchange Google OAuth authorization code for JWT token.
 ```
 
 **Errors**:
+
 - 401 Unauthorized - Invalid or expired code
 - 500 Internal Server Error - OAuth not configured
 
 ---
 
 #### `GET /auth/me`
+
 Get current authenticated user information.
 
 **Headers**:
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Response** (200 OK):
+
 ```json
 {
   "id": 1,
@@ -566,20 +603,24 @@ Authorization: Bearer <token>
 ```
 
 **Errors**:
+
 - 401 Unauthorized - Invalid or missing token
 - 404 Not Found - User not found in database
 
 ---
 
 #### `POST /auth/logout`
+
 Logout current user (clears session on client side).
 
 **Headers**:
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Response** (200 OK):
+
 ```json
 {
   "message": "Successfully logged out"
@@ -591,9 +632,11 @@ Authorization: Bearer <token>
 ### Operational Endpoints
 
 #### `GET /health`
+
 Health check endpoint.
 
 **Response** (200 OK):
+
 ```json
 {
   "status": "ok"
@@ -603,9 +646,11 @@ Health check endpoint.
 ---
 
 #### `GET /metrics`
+
 Prometheus metrics endpoint.
 
 **Response** (200 OK):
+
 ```
 # HELP app_uptime_seconds Application uptime in seconds
 # TYPE app_uptime_seconds gauge
@@ -618,26 +663,26 @@ app_uptime_seconds 123.45
 
 ### Backend (.env)
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `DATABASE_URL` | Database connection string | No | `sqlite:///./skola_alpha.db` |
-| `SECRET_KEY` | JWT signing key | Yes | - |
-| `ALGORITHM` | JWT algorithm | No | `HS256` |
-| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiration time | No | `30` |
-| `GOOGLE_CLIENT_ID` | Google OAuth Client ID | Yes | - |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth Client Secret | Yes | - |
-| `HOST` | Server host | No | `0.0.0.0` |
-| `PORT` | Server port | No | `8000` |
-| `CORS_ORIGINS` | Allowed CORS origins | No | `http://localhost:5173` |
+| Variable                      | Description                | Required | Default                      |
+| ----------------------------- | -------------------------- | -------- | ---------------------------- |
+| `DATABASE_URL`                | Database connection string | No       | `sqlite:///./skola_alpha.db` |
+| `SECRET_KEY`                  | JWT signing key            | Yes      | -                            |
+| `ALGORITHM`                   | JWT algorithm              | No       | `HS256`                      |
+| `ACCESS_TOKEN_EXPIRE_MINUTES` | Token expiration time      | No       | `30`                         |
+| `GOOGLE_CLIENT_ID`            | Google OAuth Client ID     | Yes      | -                            |
+| `GOOGLE_CLIENT_SECRET`        | Google OAuth Client Secret | Yes      | -                            |
+| `HOST`                        | Server host                | No       | `0.0.0.0`                    |
+| `PORT`                        | Server port                | No       | `8000`                       |
+| `CORS_ORIGINS`                | Allowed CORS origins       | No       | `http://localhost:5173`      |
 
 ### Frontend (.env)
 
-| Variable | Description | Required | Default |
-|----------|-------------|----------|---------|
-| `VITE_API_BASE_URL` | Backend API URL | No | `http://localhost:8000` |
-| `VITE_GOOGLE_CLIENT_ID` | Google OAuth Client ID | Yes | - |
-| `VITE_APP_NAME` | Application name | No | `Skola Alpha` |
-| `VITE_APP_VERSION` | Application version | No | `0.0.1` |
+| Variable                | Description            | Required | Default                 |
+| ----------------------- | ---------------------- | -------- | ----------------------- |
+| `VITE_API_BASE_URL`     | Backend API URL        | No       | `http://localhost:8000` |
+| `VITE_GOOGLE_CLIENT_ID` | Google OAuth Client ID | Yes      | -                       |
+| `VITE_APP_NAME`         | Application name       | No       | `Skola Alpha`           |
+| `VITE_APP_VERSION`      | Application version    | No       | `0.0.1`                 |
 
 ---
 
@@ -646,6 +691,7 @@ app_uptime_seconds 123.45
 ### Running Locally
 
 1. **Backend**:
+
    ```bash
    cd backend
    cp .env.example .env
@@ -698,6 +744,7 @@ app_uptime_seconds 123.45
 ### Backend Logs
 
 Enable debug logging:
+
 ```bash
 .venv/bin/uvicorn app.main:app --reload --log-level debug
 ```
@@ -705,6 +752,7 @@ Enable debug logging:
 ### Database Inspection
 
 SQLite:
+
 ```bash
 cd backend
 sqlite3 skola_alpha.db
@@ -734,6 +782,7 @@ cd backend
 ### Database Migration
 
 For PostgreSQL in production:
+
 ```bash
 # Update DATABASE_URL in .env
 DATABASE_URL=postgresql://user:password@host:5432/skola_alpha
@@ -745,6 +794,7 @@ alembic upgrade head
 ### Reverse Proxy Configuration
 
 Example Nginx config for HTTPS:
+
 ```nginx
 server {
     listen 443 ssl;
