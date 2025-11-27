@@ -29,7 +29,6 @@ _uptime_gauge = Gauge(
     "Application uptime in seconds",
     registry=_metrics_registry,
 )
-_start_time = time.time()
 
 
 @app.get("/health", tags=["ops"])
@@ -41,14 +40,8 @@ def health():
 @app.get("/metrics", tags=["ops"])
 def metrics():
     """Expose Prometheus metrics with a simple uptime gauge."""
-    registry = CollectorRegistry()
-    uptime = Gauge(
-        "app_uptime_seconds",
-        "Application uptime in seconds",
-        registry=registry,
-    )
-    uptime.set(time.time() - _start_time)
-    payload = generate_latest(registry)
+    _uptime_gauge.set(time.time() - _start_time)
+    payload = generate_latest(_metrics_registry)
     return Response(content=payload, media_type=CONTENT_TYPE_LATEST)
 
 
