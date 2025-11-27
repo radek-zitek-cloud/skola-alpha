@@ -31,6 +31,8 @@ async def google_auth(auth_request: GoogleAuthRequest, db: Session = Depends(get
     """
     try:
         logger.debug("=== Starting Google Auth ===")
+        logger.debug(f"GOOGLE_CLIENT_ID: {GOOGLE_CLIENT_ID[:20] if GOOGLE_CLIENT_ID else 'None'}...")
+        logger.debug(f"GOOGLE_CLIENT_SECRET: {GOOGLE_CLIENT_SECRET[:20] if GOOGLE_CLIENT_SECRET else 'None'}...")
         logger.debug(f"Received auth request with code: {auth_request.code[:20]}...")
         logger.debug(f"Redirect URI: {auth_request.redirect_uri}")
 
@@ -41,7 +43,7 @@ async def google_auth(auth_request: GoogleAuthRequest, db: Session = Depends(get
                 detail="Google OAuth is not configured on the server",
             )
 
-        logger.debug(f"Google Client ID: {GOOGLE_CLIENT_ID[:20]}...")
+        logger.debug(f"Google Client ID: {GOOGLE_CLIENT_ID[:20] if GOOGLE_CLIENT_ID else 'None'}...")
 
         # Exchange authorization code for access token
         token_url = "https://oauth2.googleapis.com/token"
