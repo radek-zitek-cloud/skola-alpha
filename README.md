@@ -88,6 +88,7 @@ All CI checks run automatically on:
 
 - [`AGENTS.md`](AGENTS.md) - Contributor guidelines and project conventions
 - [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) - Detailed architecture documentation
+- [`docs/CI_CD_GUIDE.md`](docs/CI_CD_GUIDE.md) - CI/CD workflow guide for newcomers
 - [`CHANGELOG.md`](CHANGELOG.md) - Project change history
 
 ## Environment Configuration
