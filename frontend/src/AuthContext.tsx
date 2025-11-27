@@ -61,16 +61,26 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, []);
 
   const login = useCallback(async (code: string, redirectUri: string) => {
+    console.log("[AuthContext] login() called");
+    console.log("[AuthContext] Code:", code?.substring(0, 20) + "...");
+    console.log("[AuthContext] Redirect URI:", redirectUri);
     try {
       setIsLoading(true);
+      console.log("[AuthContext] Exchanging code for token...");
       const authResponse = await authService.exchangeCodeForToken(code, redirectUri);
+      console.log("[AuthContext] Got auth response:", authResponse);
+      console.log("[AuthContext] Access token:", authResponse.access_token?.substring(0, 30) + "...");
+
+      console.log("[AuthContext] Fetching current user...");
       const userData = await authService.getCurrentUser(authResponse.access_token);
+      console.log("[AuthContext] Got user data:", userData);
 
       localStorage.setItem("auth_token", authResponse.access_token);
       setToken(authResponse.access_token);
       setUser(userData);
+      console.log("[AuthContext] Login complete!");
     } catch (error) {
-      console.error("Login failed:", error);
+      console.error("[AuthContext] Login failed:", error);
       throw error;
     } finally {
       setIsLoading(false);
