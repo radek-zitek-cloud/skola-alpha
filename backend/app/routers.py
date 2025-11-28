@@ -25,7 +25,9 @@ from app.schemas import (
     UserResponse,
     VocabularyFilters,
     VocabularyResponse,
+    VocabularyStatistics,
     WordAttemptCreate,
+    WordStatistic,
 )
 
 logger = logging.getLogger(__name__)
@@ -217,6 +219,93 @@ def get_vocabulary_filters(
         "levels": sorted(levels),
         "combinations": combinations
     }
+
+
+@router.get("/vocabulary/statistics", response_model=VocabularyStatistics, tags=["vocabulary"])
+def get_vocabulary_statistics(
+    categories: list[str] = Query(None),
+    levels: list[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Get statistics for the selected vocabulary filters.
+    """
+    # Base query for vocabulary items matching filters
+    vocab_query = db.query(Vocabulary)
+    if categories:
+        vocab_query = vocab_query.filter(Vocabulary.category.in_(categories))
+    if levels:
+        vocab_query = vocab_query.filter(Vocabulary.level.in_(levels))
+    
+    total_words = vocab_query.count()
+    
+    # Query for attempts on these words
+    attempts_query = (
+        db.query(
+            Vocabulary.id,
+            Vocabulary.czech,
+            Vocabulary.english,
+            func.count(WordAttempt.id).label("attempts"),
+            func.sum(WordAttempt.typo_count).label("typos")
+        )
+        .join(WordAttempt, Vocabulary.id == WordAttempt.word_id)
+        .filter(WordAttempt.user_id == current_user.id)
+    )
+    
+    if categories:
+        attempts_query = attempts_query.filter(Vocabulary.category.in_(categories))
+    if levels:
+        attempts_query = attempts_query.filter(Vocabulary.level.in_(levels))
+        
+    attempts_query = attempts_query.group_by(Vocabulary.id)
+    
+    results = attempts_query.all()
+    
+    total_attempts = sum(r.attempts for r in results)
+    total_typos = sum((r.typos or 0) for r in results)
+    words_learned = len(results)
+    
+    # Top typo words
+    # Sort by typos descending, then attempts descending
+    sorted_results = sorted(results, key=lambda x: (x.typos or 0, x.attempts), reverse=True)
+    top_typo_words = [
+        WordStatistic(
+            czech=r.czech,
+            english=r.english,
+            typos=r.typos or 0,
+            attempts=r.attempts
+        )
+        for r in sorted_results[:10]
+        if (r.typos or 0) > 0
+    ]
+    
+    # Top ratio words
+    # Sort by ratio (typos/attempts) descending
+    sorted_by_ratio = sorted(
+        results, 
+        key=lambda x: ((x.typos or 0) / x.attempts if x.attempts > 0 else 0), 
+        reverse=True
+    )
+    top_ratio_words = [
+        WordStatistic(
+            czech=r.czech,
+            english=r.english,
+            typos=r.typos or 0,
+            attempts=r.attempts
+        )
+        for r in sorted_by_ratio[:10]
+        if (r.typos or 0) > 0
+    ]
+    
+    return VocabularyStatistics(
+        total_attempts=total_attempts,
+        total_typos=total_typos,
+        words_learned=words_learned,
+        total_words=total_words,
+        top_typo_words=top_typo_words,
+        top_ratio_words=top_ratio_words
+    )
 
 
 @router.get("/vocabulary/random", response_model=VocabularyResponse, tags=["vocabulary"])

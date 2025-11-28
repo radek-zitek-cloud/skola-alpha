@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../AuthContext";
-import { VocabularyFilters } from "../types";
+import { VocabularyFilters, VocabularyStatistics } from "../types";
+import { playClickSound, playErrorSound, speakText } from "../utils/sound";
 
 interface WordPair {
   id: number;
@@ -23,6 +24,9 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   
+  const [showStatistics, setShowStatistics] = useState(false);
+  const [statistics, setStatistics] = useState<VocabularyStatistics | null>(null);
+
   const [currentWord, setCurrentWord] = useState<WordPair | null>(null);
   const [loading, setLoading] = useState(true);
   const [userInput, setUserInput] = useState("");
@@ -55,6 +59,35 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
     };
     fetchFilters();
   }, [token]);
+
+  const fetchStatistics = useCallback(async () => {
+    if (!token) return;
+    try {
+      let apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+      if (apiBase.endsWith("/")) apiBase = apiBase.slice(0, -1);
+      
+      const params = new URLSearchParams();
+      selectedCategories.forEach(c => params.append("categories", c));
+      selectedLevels.forEach(l => params.append("levels", l));
+      
+      const response = await fetch(`${apiBase}/vocabulary/statistics?${params.toString()}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      
+      if (response.ok) {
+        const data = await response.json();
+        setStatistics(data);
+      }
+    } catch (error) {
+      console.error("Error fetching statistics:", error);
+    }
+  }, [token, selectedCategories, selectedLevels]);
+
+  useEffect(() => {
+    if (showStatistics && phase === "config") {
+      fetchStatistics();
+    }
+  }, [showStatistics, phase, fetchStatistics]);
 
   const fetchNewWord = useCallback(async () => {
     if (!token) return;
@@ -106,6 +139,13 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
     }
   }, [currentWord, showAnswer, loading, phase]);
 
+  // Speak Czech word when it loads
+  useEffect(() => {
+    if (phase === "playing" && currentWord && !loading) {
+      // speakText(currentWord.czech, 'cs-CZ');
+    }
+  }, [currentWord, phase, loading]);
+
   const handleNext = useCallback(() => {
     fetchNewWord();
   }, [fetchNewWord]);
@@ -115,6 +155,9 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
 
   useEffect(() => {
     if (isComplete && currentWord && token) {
+      // Speak English word on completion
+      speakText(currentWord.english, 'en-US');
+
       // Send attempt data
       const sendAttempt = async () => {
         try {
@@ -143,8 +186,21 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
 
       const timer = setTimeout(() => {
         handleNext();
-      }, 1000);
-      return () => clearTimeout(timer);
+      }, 5000);
+
+      const handleKeyDown = (e: KeyboardEvent) => {
+        if (e.code === "Space") {
+          e.preventDefault();
+          handleNext();
+        }
+      };
+
+      window.addEventListener("keydown", handleKeyDown);
+
+      return () => {
+        clearTimeout(timer);
+        window.removeEventListener("keydown", handleKeyDown);
+      };
     }
   }, [isComplete, handleNext, currentWord, token, typoCount]);
 
@@ -365,7 +421,121 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
             >
               Start Session
             </button>
+            <button
+              onClick={() => setShowStatistics(!showStatistics)}
+              style={{
+                padding: "12px 24px",
+                borderRadius: "12px",
+                border: `1px solid ${isDark ? "#334155" : "#cbd5e1"}`,
+                background: showStatistics ? (isDark ? "#334155" : "#e2e8f0") : "transparent",
+                color: isDark ? "#e2e8f0" : "#1e293b",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: "pointer"
+              }}
+            >
+              {showStatistics ? "Hide Statistics" : "Show Statistics"}
+            </button>
           </div>
+
+          {showStatistics && statistics && (
+            <div style={{ 
+              marginTop: "48px", 
+              width: "100%", 
+              background: isDark ? "#1e293b" : "#ffffff",
+              padding: "24px",
+              borderRadius: "16px",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+            }}>
+              <h2 style={{ fontSize: "24px", fontWeight: "bold", marginBottom: "24px" }}>Statistics</h2>
+              
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "24px", marginBottom: "32px" }}>
+                <div style={{ padding: "16px", background: isDark ? "#0f172a" : "#f8fafc", borderRadius: "12px" }}>
+                  <div style={{ fontSize: "14px", opacity: 0.7 }}>Total Attempts</div>
+                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#3b82f6" }}>{statistics.total_attempts}</div>
+                </div>
+                <div style={{ padding: "16px", background: isDark ? "#0f172a" : "#f8fafc", borderRadius: "12px" }}>
+                  <div style={{ fontSize: "14px", opacity: 0.7 }}>Total Typos</div>
+                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#ef4444" }}>{statistics.total_typos}</div>
+                </div>
+                <div style={{ padding: "16px", background: isDark ? "#0f172a" : "#f8fafc", borderRadius: "12px" }}>
+                  <div style={{ fontSize: "14px", opacity: 0.7 }}>Words Learned</div>
+                  <div style={{ fontSize: "32px", fontWeight: "bold", color: "#10b981" }}>
+                    {statistics.words_learned} <span style={{ fontSize: "16px", opacity: 0.5 }}>/ {statistics.total_words}</span>
+                  </div>
+                  <div style={{ width: "100%", height: "4px", background: isDark ? "#334155" : "#e2e8f0", marginTop: "8px", borderRadius: "2px" }}>
+                    <div style={{ 
+                      width: `${statistics.total_words > 0 ? (statistics.words_learned / statistics.total_words) * 100 : 0}%`, 
+                      height: "100%", 
+                      background: "#10b981", 
+                      borderRadius: "2px" 
+                    }} />
+                  </div>
+                </div>
+              </div>
+
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "32px" }}>
+                {/* Absolute Worst */}
+                {statistics.top_typo_words.length > 0 && (
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "16px" }}>Most Typos (Absolute)</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                      {statistics.top_typo_words.map((word, idx) => (
+                        <div key={idx} style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                          <div style={{ width: "120px", fontWeight: "500" }}>{word.english}</div>
+                          <div style={{ flex: 1, height: "24px", background: isDark ? "#0f172a" : "#f1f5f9", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                            <div style={{ 
+                              width: `${Math.min((word.typos / Math.max(...statistics.top_typo_words.map(w => w.typos))) * 100, 100)}%`, 
+                              height: "100%", 
+                              background: "#ef4444",
+                              display: "flex",
+                              alignItems: "center",
+                              paddingLeft: "8px"
+                            }} />
+                            <div style={{ position: "absolute", top: 0, left: "8px", height: "100%", display: "flex", alignItems: "center", fontSize: "12px", fontWeight: "bold", color: isDark ? "#e2e8f0" : "#1e293b" }}>
+                              {word.typos} typos
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Relative Worst */}
+                {statistics.top_ratio_words && statistics.top_ratio_words.length > 0 && (
+                  <div>
+                    <h3 style={{ fontSize: "18px", fontWeight: "bold", marginBottom: "16px" }}>Highest Error Rate</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+                      {statistics.top_ratio_words.map((word, idx) => {
+                        const ratio = word.typos / word.attempts;
+                        const maxRatio = Math.max(...statistics.top_ratio_words.map(w => w.typos / w.attempts));
+                        
+                        return (
+                          <div key={idx} style={{ display: "flex", alignItems: "center", gap: "16px" }}>
+                            <div style={{ width: "120px", fontWeight: "500" }}>{word.english}</div>
+                            <div style={{ flex: 1, height: "24px", background: isDark ? "#0f172a" : "#f1f5f9", borderRadius: "4px", overflow: "hidden", position: "relative" }}>
+                              <div style={{ 
+                                width: `${Math.min((ratio / maxRatio) * 100, 100)}%`, 
+                                height: "100%", 
+                                background: "#f59e0b",
+                                display: "flex",
+                                alignItems: "center",
+                                paddingLeft: "8px"
+                              }} />
+                              <div style={{ position: "absolute", top: 0, left: "8px", height: "100%", display: "flex", alignItems: "center", fontSize: "12px", fontWeight: "bold", color: isDark ? "#e2e8f0" : "#1e293b" }}>
+                                {ratio.toFixed(2)} ratio ({word.attempts} att)
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -393,13 +563,23 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
     
     // Handle deletion (Backspace)
     if (rawVal.length < userInput.length) {
-      setUserInput(rawVal);
+      let newVal = rawVal;
+      // If we deleted a char, and the new end is a space, delete spaces too
+      while (newVal.length > 0 && newVal.endsWith(" ")) {
+        newVal = newVal.slice(0, -1);
+      }
+      setUserInput(newVal);
       return;
     }
 
     // Handle addition (Typing)
     const newChar = rawVal.slice(-1);
     
+    // If user typed space, ignore it (we auto-fill spaces)
+    if (newChar === ' ') {
+      return;
+    }
+
     // Determine the position we are trying to fill
     let targetIndex = userInput.length;
     
@@ -415,6 +595,17 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
       }
     }
 
+    // Check for spaces at current targetIndex (only if appending)
+    let prefix = "";
+    if (targetIndex === userInput.length) {
+        let tempIndex = targetIndex;
+        while (tempIndex < targetWord.length && targetWord[tempIndex] === ' ') {
+            prefix += ' ';
+            tempIndex++;
+        }
+        targetIndex = tempIndex;
+    }
+
     // If we are beyond the word length (and not overwriting the last char), ignore
     if (targetIndex >= targetWord.length) {
       return;
@@ -422,20 +613,31 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
 
     // Calculate the new input string
     let newUserInput;
-    if (targetIndex === userInput.length) {
-      // Appending
-      newUserInput = userInput + newChar;
+    if (targetIndex >= userInput.length) {
+      // Appending (with potential spaces prefix)
+      newUserInput = userInput + prefix + newChar;
     } else {
       // Replacing (overwriting the wrong character)
       newUserInput = userInput.slice(0, targetIndex) + newChar;
+      
+      // If we just filled up to the end, check for trailing spaces to auto-fill
+      if (newUserInput.length === targetIndex + 1) {
+          let nextIdx = newUserInput.length;
+          while (nextIdx < targetWord.length && targetWord[nextIdx] === ' ') {
+              newUserInput += ' ';
+              nextIdx++;
+          }
+      }
     }
 
     // Update Score
     if (newChar.toLowerCase() === targetWord[targetIndex].toLowerCase()) {
       setScore(s => s + 1);
+      playClickSound();
     } else {
       setScore(s => s - 1);
       setTypoCount(c => c + 1);
+      playErrorSound();
     }
 
     setUserInput(newUserInput);
@@ -498,7 +700,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
         padding: "48px",
         borderRadius: "24px",
         boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)",
-        maxWidth: "600px",
+        maxWidth: "1200px",
         width: "100%",
         textAlign: "center",
         display: "flex",
@@ -521,6 +723,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
         <div 
           style={{ 
             display: "flex", 
+            flexWrap: "wrap",
             gap: "12px", 
             justifyContent: "center",
             position: "relative",
@@ -550,6 +753,10 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
 
           {/* Visual Boxes */}
           {targetWord.split("").map((char, index) => {
+            if (char === " ") {
+               return <div key={index} style={{ width: "24px" }}></div>; // Spacer
+            }
+
             const userChar = userInput[index] || "";
             const isCorrect = userChar.toLowerCase() === char.toLowerCase();
             const hasChar = userChar !== "";
@@ -563,6 +770,11 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
               if (lastChar.toLowerCase() !== expected.toLowerCase()) {
                 activeIndex = lastIdx;
               }
+            }
+            
+            // If active index is a space, move to next
+            while (activeIndex < targetWord.length && targetWord[activeIndex] === ' ') {
+                activeIndex++;
             }
 
             let borderColor = isDark ? "#475569" : "#cbd5e1";

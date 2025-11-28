@@ -73,21 +73,34 @@ class VocabularyResponse(BaseModel):
         from_attributes = True
 
 
-class CategoryLevelPair(BaseModel):
-    """Schema for category-level combination."""
-    category: str
-    level: str
+class WordAttemptCreate(BaseModel):
+    """Schema for creating a word attempt."""
+
+    word_id: int
+    typo_count: int
+
 
 class VocabularyFilters(BaseModel):
     """Schema for available vocabulary filters."""
 
     categories: list[str]
     levels: list[str]
-    combinations: list[CategoryLevelPair]
+    combinations: list[dict]
 
 
-class WordAttemptCreate(BaseModel):
-    """Schema for creating a word attempt."""
+class WordStatistic(BaseModel):
+    """Schema for individual word statistics."""
+    czech: str
+    english: str
+    typos: int
+    attempts: int
 
-    word_id: int
-    typo_count: int
+
+class VocabularyStatistics(BaseModel):
+    """Schema for aggregated vocabulary statistics."""
+    total_attempts: int
+    total_typos: int
+    words_learned: int
+    total_words: int
+    top_typo_words: list[WordStatistic]
+    top_ratio_words: list[WordStatistic]
