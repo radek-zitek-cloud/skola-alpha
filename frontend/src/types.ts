@@ -13,4 +13,8 @@ export interface AuthResponse {
   token_type: string;
 }
 
+export interface OAuthConfig {
+  google_client_id: string;
+}
+
 export type Theme = "light" | "dark";

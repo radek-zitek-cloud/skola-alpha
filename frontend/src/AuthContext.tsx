@@ -7,7 +7,8 @@ interface AuthContextType {
   token: string | null;
   theme: Theme;
   isLoading: boolean;
-  login: (code: string, redirectUri: string) => Promise<void>;
+  googleClientId: string | null;
+  login: (code: string, redirectUri: string, codeVerifier?: string) => Promise<void>;
   logout: () => void;
   toggleTheme: () => void;
 }
@@ -31,43 +32,73 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [theme, setTheme] = useState<Theme>("dark");
   const [isLoading, setIsLoading] = useState(true);
+  const [googleClientId, setGoogleClientId] = useState<string | null>(null);
 
   // Load saved auth and theme from localStorage on mount
   useEffect(() => {
-    const savedToken = localStorage.getItem("auth_token");
     const savedTheme = localStorage.getItem("theme") as Theme | null;
 
     if (savedTheme) {
       setTheme(savedTheme);
     }
 
-    if (savedToken) {
-      authService
-        .getCurrentUser(savedToken)
-        .then((userData) => {
-          setUser(userData);
-          setToken(savedToken);
+    const savedToken = localStorage.getItem("auth_token");
+    let cancelled = false;
+
+    const load = async () => {
+      const configPromise = authService
+        .getOAuthConfig()
+        .then((config) => {
+          if (!cancelled) {
+            setGoogleClientId(config.google_client_id);
+          }
         })
-        .catch(() => {
-          // Token is invalid, clear it
-          localStorage.removeItem("auth_token");
-        })
-        .finally(() => {
-          setIsLoading(false);
+        .catch((error) => {
+          console.error("[AuthContext] Failed to load OAuth config", error);
+          throw error;
         });
-    } else {
-      setIsLoading(false);
-    }
+
+      const userPromise = savedToken
+        ? authService
+            .getCurrentUser(savedToken)
+            .then((userData) => {
+              if (!cancelled) {
+                setUser(userData);
+                setToken(savedToken);
+              }
+            })
+            .catch((error) => {
+              console.error("[AuthContext] Failed to load current user", error);
+              localStorage.removeItem("auth_token");
+            })
+        : Promise.resolve();
+
+      try {
+        await Promise.all([configPromise, userPromise]);
+      } catch (error) {
+        console.error("[AuthContext] Initialization failed", error);
+      } finally {
+        if (!cancelled) {
+          setIsLoading(false);
+        }
+      }
+    };
+
+    void load();
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  const login = useCallback(async (code: string, redirectUri: string) => {
+  const login = useCallback(async (code: string, redirectUri: string, codeVerifier?: string) => {
     console.log("[AuthContext] login() called");
     console.log("[AuthContext] Code:", code?.substring(0, 20) + "...");
     console.log("[AuthContext] Redirect URI:", redirectUri);
     try {
       setIsLoading(true);
       console.log("[AuthContext] Exchanging code for token...");
-      const authResponse = await authService.exchangeCodeForToken(code, redirectUri);
+      const authResponse = await authService.exchangeCodeForToken(code, redirectUri, codeVerifier);
       console.log("[AuthContext] Got auth response:", authResponse);
       console.log("[AuthContext] Access token:", authResponse.access_token?.substring(0, 30) + "...");
 
@@ -108,7 +139,9 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   }, [theme]);
 
   return (
-    <AuthContext.Provider value={{ user, token, theme, isLoading, login, logout, toggleTheme }}>
+    <AuthContext.Provider
+      value={{ user, token, theme, isLoading, googleClientId, login, logout, toggleTheme }}
+    >
       {children}
     </AuthContext.Provider>
   );

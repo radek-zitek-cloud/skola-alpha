@@ -1,14 +1,68 @@
-import { useEffect, useRef } from "react";
-import { useGoogleLogin } from "@react-oauth/google";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useAuth } from "../AuthContext";
+
+const PKCE_CODE_VERIFIER_KEY = "google_pkce_code_verifier";
+
+const base64UrlEncode = (buffer: ArrayBuffer | Uint8Array) => {
+  const bytes = buffer instanceof ArrayBuffer ? new Uint8Array(buffer) : buffer;
+  let binary = "";
+  bytes.forEach((b) => {
+    binary += String.fromCharCode(b);
+  });
+  return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+};
+
+const generateCodeVerifier = () => {
+  const array = new Uint8Array(64);
+  crypto.getRandomValues(array);
+  return base64UrlEncode(array);
+};
+
+const generateCodeChallenge = async (verifier: string) => {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(verifier);
+  const digest = await crypto.subtle.digest("SHA-256", data);
+  return base64UrlEncode(digest);
+};
 
 interface LoginProps {
   onSuccess?: () => void;
 }
 
 export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
-  const { login } = useAuth();
+  const { login, googleClientId, isLoading } = useAuth();
   const hasProcessedCode = useRef(false);
+  const [isRedirecting, setIsRedirecting] = useState(false);
+
+  const startGoogleLogin = useCallback(async () => {
+    if (!googleClientId) {
+      console.error("[Login] Google Client ID not loaded yet");
+      return;
+    }
+
+    try {
+      setIsRedirecting(true);
+      const codeVerifier = generateCodeVerifier();
+      sessionStorage.setItem(PKCE_CODE_VERIFIER_KEY, codeVerifier);
+      const codeChallenge = await generateCodeChallenge(codeVerifier);
+      const redirectUri = window.location.origin;
+      const params = new URLSearchParams({
+        client_id: googleClientId,
+        redirect_uri: redirectUri,
+        response_type: "code",
+        scope: "openid email profile",
+        access_type: "offline",
+        prompt: "consent",
+        code_challenge: codeChallenge,
+        code_challenge_method: "S256",
+      });
+
+      window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+    } catch (error) {
+      setIsRedirecting(false);
+      console.error("[Login] Failed to initiate Google OAuth", error);
+    }
+  }, [googleClientId]);
 
   useEffect(() => {
     // Check if we're returning from Google OAuth with a code
@@ -23,35 +77,32 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
     if (code && !hasProcessedCode.current) {
       hasProcessedCode.current = true;
       console.log("[Login] Processing auth code...");
-      // Use origin only, without pathname to avoid trailing slash issues
       const redirectUri = window.location.origin;
+      const codeVerifier = sessionStorage.getItem(PKCE_CODE_VERIFIER_KEY);
 
-      login(code, redirectUri)
+      if (!codeVerifier) {
+        console.error("[Login] Missing PKCE code verifier in sessionStorage");
+        hasProcessedCode.current = false;
+        window.history.replaceState({}, document.title, window.location.pathname);
+        return;
+      }
+
+      login(code, redirectUri, codeVerifier)
         .then(() => {
           console.log("[Login] Login successful, clearing URL");
           // Clear the code from URL
           window.history.replaceState({}, document.title, window.location.pathname);
+          sessionStorage.removeItem(PKCE_CODE_VERIFIER_KEY);
           onSuccess?.();
         })
         .catch((error) => {
           console.error("[Login] OAuth login failed:", error);
           hasProcessedCode.current = false; // Allow retry on error
+          sessionStorage.removeItem(PKCE_CODE_VERIFIER_KEY);
+          window.history.replaceState({}, document.title, window.location.pathname);
         });
     }
   }, [login, onSuccess]);
-
-  const handleGoogleLogin = useGoogleLogin({
-    onSuccess: (codeResponse) => {
-      console.log("[Login] onSuccess callback called", codeResponse);
-      // When using auth-code flow with redirect, the useEffect handles the code
-      // This callback should not be needed, but we'll add logging just in case
-    },
-    onError: (error) => {
-      console.error("[Login] Google login failed:", error);
-    },
-    flow: "auth-code",
-    redirect_uri: window.location.origin,
-  });
 
   return (
     <div
@@ -82,7 +133,8 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         <p style={{ margin: "0 0 32px", color: "#94a3b8" }}>Sign in to continue</p>
 
         <button
-          onClick={() => handleGoogleLogin()}
+          onClick={() => void startGoogleLogin()}
+          disabled={!googleClientId || isLoading || isRedirecting}
           style={{
             display: "inline-flex",
             alignItems: "center",
@@ -96,6 +148,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
             fontWeight: 500,
             cursor: "pointer",
             boxShadow: "0 2px 8px rgba(0,0,0,0.15)",
+            opacity: !googleClientId || isRedirecting ? 0.7 : 1,
           }}
           onMouseEnter={(e) => {
             e.currentTarget.style.boxShadow = "0 4px 12px rgba(0,0,0,0.2)";
@@ -124,7 +177,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
               />
             </g>
           </svg>
-          Sign in with Google
+          {isRedirecting ? "Redirecting..." : "Sign in with Google"}
         </button>
       </div>
     </div>

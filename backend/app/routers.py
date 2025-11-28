@@ -16,7 +16,7 @@ from app.auth import (
 )
 from app.database import get_db
 from app.models import User
-from app.schemas import GoogleAuthRequest, Token, UserResponse
+from app.schemas import GoogleAuthRequest, OAuthConfig, Token, UserResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -54,6 +54,9 @@ async def google_auth(auth_request: GoogleAuthRequest, db: Session = Depends(get
             "redirect_uri": auth_request.redirect_uri,
             "grant_type": "authorization_code",
         }
+
+        if auth_request.code_verifier:
+            token_data["code_verifier"] = auth_request.code_verifier
 
         logger.debug(f"Exchanging code for token at {token_url}")
         async with httpx.AsyncClient() as client:
@@ -154,3 +157,16 @@ def logout():
     This endpoint exists for consistency and can be extended with token blacklisting if needed.
     """
     return {"message": "Successfully logged out"}
+
+
+@router.get("/auth/config", response_model=OAuthConfig, tags=["auth"])
+def auth_config():
+    """Expose OAuth configuration needed by the frontend."""
+    if not GOOGLE_CLIENT_ID:
+        logger.error("Google Client ID is not configured")
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Google OAuth is not configured on the server",
+        )
+
+    return {"google_client_id": GOOGLE_CLIENT_ID}

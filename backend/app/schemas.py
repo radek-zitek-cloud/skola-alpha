@@ -51,3 +51,10 @@ class GoogleAuthRequest(BaseModel):
 
     code: str
     redirect_uri: str
+    code_verifier: Optional[str] = None
+
+
+class OAuthConfig(BaseModel):
+    """Schema for exposing OAuth configuration details."""
+
+    google_client_id: str

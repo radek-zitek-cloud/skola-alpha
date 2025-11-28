@@ -1,16 +1,22 @@
-import type { AuthResponse, User } from "./types";
+import type { AuthResponse, OAuthConfig, User } from "./types";
 
 const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:8000";
 
 export const authService = {
-  async exchangeCodeForToken(code: string, redirectUri: string): Promise<AuthResponse> {
+  async exchangeCodeForToken(code: string, redirectUri: string, codeVerifier?: string): Promise<AuthResponse> {
     console.log("[authService] Exchanging code for token...", { code: code.substring(0, 20) + "...", redirectUri });
+    const payload: Record<string, string> = { code, redirect_uri: redirectUri };
+
+    if (codeVerifier) {
+      payload.code_verifier = codeVerifier;
+    }
+
     const response = await fetch(`${apiBase}/auth/google`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ code, redirect_uri: redirectUri }),
+      body: JSON.stringify(payload),
     });
 
     if (!response.ok) {
@@ -51,5 +57,15 @@ export const authService = {
         Authorization: `Bearer ${token}`,
       },
     });
+  },
+
+  async getOAuthConfig(): Promise<OAuthConfig> {
+    const response = await fetch(`${apiBase}/auth/config`);
+
+    if (!response.ok) {
+      throw new Error("Failed to load OAuth configuration");
+    }
+
+    return response.json();
   },
 };

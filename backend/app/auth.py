@@ -32,6 +32,8 @@ security = HTTPBearer()
 def create_access_token(data: dict, expires_delta: Optional[timedelta] = None) -> str:
     """Create a JWT access token."""
     to_encode = data.copy()
+    if "sub" in to_encode and to_encode["sub"] is not None:
+        to_encode["sub"] = str(to_encode["sub"])
     if expires_delta:
         expire = datetime.utcnow() + expires_delta
     else:
@@ -52,13 +54,19 @@ def verify_token(token: str) -> TokenData:
     try:
         payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
         logger.debug(f"Token payload: {payload}")
-        user_id: int = payload.get("sub")
+        user_id = payload.get("sub")
         email: str = payload.get("email")
         logger.debug(f"Extracted user_id: {user_id}, email: {email}")
         if user_id is None:
             logger.error("user_id is None in token payload")
             raise credentials_exception
-        token_data = TokenData(user_id=user_id, email=email)
+        try:
+            user_id_int = int(user_id)
+        except (TypeError, ValueError):
+            logger.error("user_id in token payload is not an integer")
+            raise credentials_exception
+
+        token_data = TokenData(user_id=user_id_int, email=email)
         return token_data
     except JWTError as e:
         logger.error(f"JWT decode error: {e}")
