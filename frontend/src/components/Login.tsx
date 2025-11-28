@@ -113,7 +113,6 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         justifyContent: "center",
         background: "#0f172a",
         color: "#e2e8f0",
-        fontFamily: "Inter, system-ui, -apple-system, sans-serif",
         padding: "24px",
         boxSizing: "border-box",
       }}
