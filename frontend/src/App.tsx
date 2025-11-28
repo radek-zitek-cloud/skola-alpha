@@ -5,6 +5,7 @@ import { UserProfile } from "./components/UserProfile";
 import { Dashboard } from "./components/Dashboard";
 import { StatusFooter } from "./components/StatusFooter";
 import { SpellingActivity } from "./components/SpellingActivity";
+import { MathActivity } from "./components/MathActivity";
 
 function App() {
   const { user, isLoading } = useAuth();
@@ -48,6 +49,9 @@ function App() {
       )}
       {currentView === "english-spelling" && (
         <SpellingActivity onBack={() => setCurrentView("dashboard")} />
+      )}
+      {currentView === "math-activity" && (
+        <MathActivity onBack={() => setCurrentView("dashboard")} />
       )}
       {/* Fallback for unimplemented activities */}
       {currentView !== "dashboard" && currentView !== "english-spelling" && (

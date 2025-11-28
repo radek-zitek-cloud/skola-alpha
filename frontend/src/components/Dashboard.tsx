@@ -19,9 +19,9 @@ const activities: Activity[] = [
     textColor: "#ffffff",
   },
   {
-    id: "math-100",
+    id: "math-activity",
     subject: "Math",
-    topic: "Up to 100",
+    topic: "Practice",
     icon: "🧮",
     color: "#10b981", // Emerald 500
     textColor: "#ffffff",

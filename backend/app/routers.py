@@ -17,10 +17,13 @@ from app.auth import (
     get_current_user,
 )
 from app.database import get_db
-from app.models import User, Vocabulary, WordAttempt
+from app.models import MathAttempt, User, Vocabulary, WordAttempt
 from app.schemas import (
     GoogleAuthRequest,
+    MathAttemptCreate,
+    MathStatistics,
     OAuthConfig,
+    OperationStatistic,
     Token,
     UserResponse,
     VocabularyFilters,
@@ -388,3 +391,51 @@ def record_attempt(
     db.add(db_attempt)
     db.commit()
     return {"status": "success"}
+
+
+@router.post("/math/attempt", status_code=status.HTTP_201_CREATED, tags=["math"])
+async def record_math_attempt(
+    attempt: MathAttemptCreate,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Record a math attempt."""
+    db_attempt = MathAttempt(
+        user_id=current_user.id,
+        operation=attempt.operation,
+        operand1=attempt.operand1,
+        operand2=attempt.operand2,
+        result=attempt.result,
+        remainder=attempt.remainder,
+        max_number=attempt.max_number,
+        false_attempts=attempt.false_attempts,
+    )
+    db.add(db_attempt)
+    db.commit()
+    db.refresh(db_attempt)
+    return {"status": "success"}
+
+
+@router.get("/math/statistics", response_model=MathStatistics, tags=["math"])
+async def get_math_statistics(
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    """Get math statistics for the current user."""
+    attempts = db.query(MathAttempt).filter(MathAttempt.user_id == current_user.id).all()
+
+    total_attempts = len(attempts)
+    operations_stats = {}
+
+    for attempt in attempts:
+        op = attempt.operation
+        if op not in operations_stats:
+            operations_stats[op] = {"attempts": 0, "false_attempts": 0}
+
+        operations_stats[op]["attempts"] += 1
+        operations_stats[op]["false_attempts"] += attempt.false_attempts
+
+    return {
+        "total_attempts": total_attempts,
+        "operations": operations_stats,
+    }

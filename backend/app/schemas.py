@@ -104,3 +104,28 @@ class VocabularyStatistics(BaseModel):
     total_words: int
     top_typo_words: list[WordStatistic]
     top_ratio_words: list[WordStatistic]
+
+
+class MathAttemptCreate(BaseModel):
+    """Schema for creating a math attempt."""
+
+    operation: str
+    operand1: int
+    operand2: int
+    result: int
+    remainder: Optional[int] = None
+    max_number: int
+    false_attempts: int
+
+
+class OperationStatistic(BaseModel):
+    """Schema for statistics of a specific operation."""
+    attempts: int
+    false_attempts: int
+
+
+class MathStatistics(BaseModel):
+    """Schema for aggregated math statistics."""
+
+    total_attempts: int
+    operations: dict[str, OperationStatistic]

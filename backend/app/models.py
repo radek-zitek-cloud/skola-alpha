@@ -43,3 +43,20 @@ class WordAttempt(Base):
     word_id = Column(Integer, ForeignKey("vocabulary.id"), nullable=False)
     typo_count = Column(Integer, default=0)
     timestamp = Column(DateTime, default=datetime.utcnow)
+
+
+class MathAttempt(Base):
+    """Model for storing user math attempts."""
+
+    __tablename__ = "math_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    timestamp = Column(DateTime, default=datetime.utcnow)
+    operation = Column(String, nullable=False)
+    operand1 = Column(Integer, nullable=False)
+    operand2 = Column(Integer, nullable=False)
+    result = Column(Integer, nullable=False)
+    remainder = Column(Integer, nullable=True)
+    max_number = Column(Integer, nullable=False)
+    false_attempts = Column(Integer, default=0)
