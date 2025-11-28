@@ -19,3 +19,14 @@ class User(Base):
     picture = Column(String, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class Vocabulary(Base):
+    """Vocabulary model for storing word pairs."""
+
+    __tablename__ = "vocabulary"
+
+    id = Column(Integer, primary_key=True, index=True)
+    czech = Column(String, nullable=False)
+    english = Column(String, nullable=False)
+    category = Column(String, nullable=True)

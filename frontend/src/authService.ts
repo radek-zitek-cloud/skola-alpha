@@ -1,6 +1,19 @@
 import type { AuthResponse, OAuthConfig, User } from "./types";
 
-const apiBase = (import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:8000";
+const normalizeBaseUrl = (baseUrl: string): string => {
+  if (!baseUrl) {
+    return "http://localhost:8000";
+  }
+
+  const trimmed = baseUrl.trim();
+  if (trimmed.length <= 1) {
+    return trimmed || "http://localhost:8000";
+  }
+
+  return trimmed.replace(/\/+$/, "");
+};
+
+const apiBase = normalizeBaseUrl((import.meta.env.VITE_API_BASE_URL as string | undefined) ?? "http://localhost:8000");
 
 export const authService = {
   async exchangeCodeForToken(code: string, redirectUri: string, codeVerifier?: string): Promise<AuthResponse> {

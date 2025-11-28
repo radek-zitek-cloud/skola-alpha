@@ -42,9 +42,26 @@ Base.metadata.create_all(bind=engine)
 # Store application start time for uptime calculation
 _start_time = time.time()
 
+
+def _load_cors_origins() -> list[str]:
+    """Parse CORS origins from env (comma separated) with sensible defaults."""
+
+    raw_origins = os.getenv("CORS_ORIGINS")
+    if not raw_origins:
+        return ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+    origins: list[str] = []
+    for origin in raw_origins.split(","):
+        cleaned = origin.strip()
+        if cleaned:
+            origins.append(cleaned.rstrip("/"))
+
+    return origins or ["http://localhost:5173", "http://127.0.0.1:5173"]
+
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173", "http://127.0.0.1:5173"],
+    allow_origins=_load_cors_origins(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

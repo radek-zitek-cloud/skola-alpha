@@ -58,3 +58,14 @@ class OAuthConfig(BaseModel):
     """Schema for exposing OAuth configuration details."""
 
     google_client_id: str
+
+
+class VocabularyResponse(BaseModel):
+    """Schema for vocabulary response."""
+
+    id: int
+    czech: str
+    english: str
+
+    class Config:
+        from_attributes = True

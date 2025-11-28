@@ -6,6 +6,7 @@ from datetime import timedelta
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
+from sqlalchemy.sql.expression import func
 
 from app.auth import (
     ACCESS_TOKEN_EXPIRE_MINUTES,
@@ -15,8 +16,8 @@ from app.auth import (
     get_current_user,
 )
 from app.database import get_db
-from app.models import User
-from app.schemas import GoogleAuthRequest, OAuthConfig, Token, UserResponse
+from app.models import User, Vocabulary
+from app.schemas import GoogleAuthRequest, OAuthConfig, Token, UserResponse, VocabularyResponse
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -170,3 +171,17 @@ def auth_config():
         )
 
     return {"google_client_id": GOOGLE_CLIENT_ID}
+
+
+@router.get("/vocabulary/random", response_model=VocabularyResponse, tags=["vocabulary"])
+def get_random_word(
+    current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
+):
+    """Get a random vocabulary word pair."""
+    word = db.query(Vocabulary).order_by(func.random()).first()
+    if not word:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No vocabulary words found",
+        )
+    return word
