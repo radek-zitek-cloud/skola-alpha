@@ -1,23 +1,19 @@
 import re
 import time
 
-from fastapi.testclient import TestClient
-
 from app.main import app
-
-client = TestClient(app)
 
 # Maximum reasonable uptime during test execution (1 hour)
 _MAX_TEST_UPTIME_SECONDS = 3600
 
 
-def test_health_ok():
+def test_health_ok(client):
     resp = client.get("/health")
     assert resp.status_code == 200
     assert resp.json() == {"status": "ok"}
 
 
-def test_metrics_exposes_prometheus_format():
+def test_metrics_exposes_prometheus_format(client):
     resp = client.get("/metrics")
     assert resp.status_code == 200
     assert resp.headers["content-type"].startswith("text/plain")
@@ -33,7 +29,7 @@ def _parse_uptime(response_content: bytes) -> float:
     raise ValueError("Could not parse app_uptime_seconds from metrics response")
 
 
-def test_metrics_uptime_increases():
+def test_metrics_uptime_increases(client):
     """Test that uptime increases between sequential requests."""
     resp1 = client.get("/metrics")
     uptime1 = _parse_uptime(resp1.content)
@@ -47,7 +43,7 @@ def test_metrics_uptime_increases():
     assert uptime2 > uptime1, f"Uptime should increase: {uptime2} should be > {uptime1}"
 
 
-def test_metrics_uptime_is_elapsed_time():
+def test_metrics_uptime_is_elapsed_time(client):
     """Test that uptime represents elapsed time, not Unix timestamp."""
     resp = client.get("/metrics")
     uptime = _parse_uptime(resp.content)

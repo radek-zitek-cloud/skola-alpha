@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, Integer, String
+from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
 
 from app.database import Base
 
@@ -30,3 +30,16 @@ class Vocabulary(Base):
     czech = Column(String, nullable=False)
     english = Column(String, nullable=False)
     category = Column(String, nullable=True)
+    level = Column(String, nullable=True)
+
+
+class WordAttempt(Base):
+    """Model for storing user attempts at words."""
+
+    __tablename__ = "word_attempts"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    word_id = Column(Integer, ForeignKey("vocabulary.id"), nullable=False)
+    typo_count = Column(Integer, default=0)
+    timestamp = Column(DateTime, default=datetime.utcnow)

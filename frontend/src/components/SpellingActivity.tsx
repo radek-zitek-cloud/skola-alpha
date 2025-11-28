@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
 import { useAuth } from "../AuthContext";
+import { VocabularyFilters } from "../types";
 
 interface WordPair {
+  id: number;
   czech: string;
   english: string;
 }
@@ -10,16 +12,49 @@ interface SpellingActivityProps {
   onBack: () => void;
 }
 
+type Phase = "config" | "playing";
+
 export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) => {
   const { theme, token } = useAuth();
   const isDark = theme === "dark";
+  
+  const [phase, setPhase] = useState<Phase>("config");
+  const [filters, setFilters] = useState<VocabularyFilters | null>(null);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [selectedLevels, setSelectedLevels] = useState<string[]>([]);
   
   const [currentWord, setCurrentWord] = useState<WordPair | null>(null);
   const [loading, setLoading] = useState(true);
   const [userInput, setUserInput] = useState("");
   const [score, setScore] = useState(0);
+  const [typoCount, setTypoCount] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Fetch filters on mount
+  useEffect(() => {
+    const fetchFilters = async () => {
+      if (!token) return;
+      try {
+        let apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+        if (apiBase.endsWith("/")) apiBase = apiBase.slice(0, -1);
+        
+        const response = await fetch(`${apiBase}/vocabulary/filters`, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setFilters(data);
+        }
+      } catch (error) {
+        console.error("Error fetching filters:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchFilters();
+  }, [token]);
 
   const fetchNewWord = useCallback(async () => {
     if (!token) return;
@@ -27,12 +62,15 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
     setLoading(true);
     try {
       let apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-      // Remove trailing slash if present to avoid double slashes
       if (apiBase.endsWith("/")) {
         apiBase = apiBase.slice(0, -1);
       }
       
-      const response = await fetch(`${apiBase}/vocabulary/random`, {
+      const params = new URLSearchParams();
+      selectedCategories.forEach(c => params.append("categories", c));
+      selectedLevels.forEach(l => params.append("levels", l));
+      
+      const response = await fetch(`${apiBase}/vocabulary/random?${params.toString()}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }
@@ -45,25 +83,28 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
       const data = await response.json();
       setCurrentWord(data);
       setUserInput("");
+      setTypoCount(0);
       setShowAnswer(false);
     } catch (error) {
       console.error("Error fetching word:", error);
     } finally {
       setLoading(false);
     }
-  }, [token]);
+  }, [token, selectedCategories, selectedLevels]);
 
-  // Initial fetch
+  // Initial fetch when entering playing phase
   useEffect(() => {
-    fetchNewWord();
-  }, [fetchNewWord]);
+    if (phase === "playing") {
+      fetchNewWord();
+    }
+  }, [phase, fetchNewWord]);
 
   // Focus input when word changes
   useEffect(() => {
-    if (inputRef.current && !loading) {
+    if (phase === "playing" && inputRef.current && !loading) {
       inputRef.current.focus();
     }
-  }, [currentWord, showAnswer, loading]);
+  }, [currentWord, showAnswer, loading, phase]);
 
   const handleNext = useCallback(() => {
     fetchNewWord();
@@ -73,13 +114,262 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
   const isComplete = targetWord.length > 0 && userInput.toLowerCase() === targetWord;
 
   useEffect(() => {
-    if (isComplete) {
+    if (isComplete && currentWord && token) {
+      // Send attempt data
+      const sendAttempt = async () => {
+        try {
+          let apiBase = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+          if (apiBase.endsWith("/")) {
+            apiBase = apiBase.slice(0, -1);
+          }
+          
+          await fetch(`${apiBase}/vocabulary/attempt`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`
+            },
+            body: JSON.stringify({
+              word_id: currentWord.id,
+              typo_count: typoCount
+            })
+          });
+        } catch (error) {
+          console.error("Error sending attempt:", error);
+        }
+      };
+      
+      sendAttempt();
+
       const timer = setTimeout(() => {
         handleNext();
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [isComplete, handleNext]);
+  }, [isComplete, handleNext, currentWord, token, typoCount]);
+
+  const handleStartSession = () => {
+    setPhase("playing");
+  };
+
+  const handleEndSession = () => {
+    setPhase("config");
+    setScore(0);
+  };
+
+  const toggleCategory = (category: string) => {
+    setSelectedCategories(prev => 
+      prev.includes(category) 
+        ? prev.filter(c => c !== category)
+        : [...prev, category]
+    );
+  };
+
+  const toggleLevel = (level: string) => {
+    if (!filters) return;
+
+    const isSelecting = !selectedLevels.includes(level);
+    
+    // Update levels
+    const newLevels = isSelecting
+      ? [...selectedLevels, level]
+      : selectedLevels.filter(l => l !== level);
+    
+    setSelectedLevels(newLevels);
+
+    if (isSelecting) {
+      // When selecting a level, add all its categories
+      const categoriesToAdd = filters.combinations
+        .filter(c => c.level === level)
+        .map(c => c.category);
+      
+      setSelectedCategories(prev => {
+        const unique = new Set([...prev, ...categoriesToAdd]);
+        return Array.from(unique);
+      });
+    } else {
+      // When unselecting a level, remove categories that are no longer available
+      // A category is available if it exists in ANY of the remaining selected levels
+      const availableCategories = new Set(
+        filters.combinations
+          .filter(c => newLevels.includes(c.level))
+          .map(c => c.category)
+      );
+
+      setSelectedCategories(prev => 
+        prev.filter(cat => availableCategories.has(cat))
+      );
+    }
+  };
+
+  if (loading && !filters && phase === "config") {
+    return (
+      <div style={{ 
+        minHeight: "100vh", 
+        display: "flex", 
+        alignItems: "center", 
+        justifyContent: "center",
+        background: isDark ? "#0f172a" : "#f9fafb",
+        color: isDark ? "#e2e8f0" : "#111827"
+      }}>
+        Loading configuration...
+      </div>
+    );
+  }
+
+  if (phase === "config") {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: isDark ? "#0f172a" : "#f9fafb",
+          color: isDark ? "#e2e8f0" : "#111827",
+          padding: "24px",
+          paddingTop: "88px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "800px" }}>
+          <h1 style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "32px", textAlign: "center" }}>
+            Configure Session
+          </h1>
+
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px", marginBottom: "48px" }}>
+            {/* Levels */}
+            <div style={{ 
+              background: isDark ? "#1e293b" : "#ffffff", 
+              padding: "24px", 
+              borderRadius: "16px",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+            }}>
+              <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "16px" }}>Levels</h2>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
+                {filters?.levels
+                  .sort((a, b) => parseInt(a) - parseInt(b))
+                  .map(level => (
+                  <label 
+                    key={level} 
+                    style={{ 
+                      display: "flex", 
+                      alignItems: "center", 
+                      gap: "8px", 
+                      cursor: "pointer",
+                      padding: "8px 16px",
+                      borderRadius: "8px",
+                      background: selectedLevels.includes(level) 
+                        ? (isDark ? "#3b82f6" : "#eff6ff") 
+                        : (isDark ? "#334155" : "#f1f5f9"),
+                      border: `1px solid ${selectedLevels.includes(level) ? "#3b82f6" : "transparent"}`,
+                      color: selectedLevels.includes(level) 
+                        ? (isDark ? "#ffffff" : "#1d4ed8") 
+                        : (isDark ? "#e2e8f0" : "#475569"),
+                      transition: "all 0.2s"
+                    }}
+                  >
+                    <input 
+                      type="checkbox" 
+                      checked={selectedLevels.includes(level)}
+                      onChange={() => toggleLevel(level)}
+                      style={{ display: "none" }}
+                    />
+                    <span style={{ fontWeight: "600" }}>{level}</span>
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Categories */}
+            <div style={{ 
+              background: isDark ? "#1e293b" : "#ffffff", 
+              padding: "24px", 
+              borderRadius: "16px",
+              boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1)"
+            }}>
+              <h2 style={{ fontSize: "20px", fontWeight: "bold", marginBottom: "16px" }}>Categories</h2>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                {filters?.categories.sort().map(category => {
+                  // Determine if category is enabled based on selected levels
+                  // If no levels are selected, ALL categories are disabled
+                  const isEnabled = selectedLevels.length > 0 && filters.combinations.some(
+                    c => c.category === category && selectedLevels.includes(c.level)
+                  );
+
+                  return (
+                    <label 
+                      key={category} 
+                      style={{ 
+                        display: "flex", 
+                        alignItems: "center", 
+                        gap: "8px", 
+                        cursor: isEnabled ? "pointer" : "not-allowed",
+                        padding: "6px 12px",
+                        borderRadius: "20px",
+                        background: selectedCategories.includes(category)
+                          ? (isDark ? "#10b981" : "#ecfdf5")
+                          : (isDark ? "#334155" : "#f1f5f9"),
+                        border: `1px solid ${selectedCategories.includes(category) ? "#10b981" : "transparent"}`,
+                        color: selectedCategories.includes(category)
+                          ? (isDark ? "#ffffff" : "#047857")
+                          : (isDark ? "#e2e8f0" : "#475569"),
+                        opacity: isEnabled ? 1 : 0.4,
+                        transition: "all 0.2s",
+                        fontSize: "14px"
+                      }}
+                    >
+                      <input 
+                        type="checkbox" 
+                        checked={selectedCategories.includes(category)}
+                        onChange={() => isEnabled && toggleCategory(category)}
+                        disabled={!isEnabled}
+                        style={{ display: "none" }}
+                      />
+                      <span style={{ textTransform: "capitalize" }}>{category}</span>
+                    </label>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: "flex", justifyContent: "center", gap: "16px" }}>
+            <button
+              onClick={onBack}
+              style={{
+                padding: "12px 24px",
+                borderRadius: "12px",
+                border: `1px solid ${isDark ? "#334155" : "#cbd5e1"}`,
+                background: "transparent",
+                color: isDark ? "#e2e8f0" : "#1e293b",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: "pointer"
+              }}
+            >
+              Back to Dashboard
+            </button>
+            <button
+              onClick={handleStartSession}
+              style={{
+                padding: "12px 32px",
+                borderRadius: "12px",
+                border: "none",
+                background: "#2563eb",
+                color: "white",
+                fontSize: "16px",
+                fontWeight: "600",
+                cursor: "pointer",
+                boxShadow: "0 4px 6px -1px rgba(37, 99, 235, 0.2)"
+              }}
+            >
+              Start Session
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   if (loading || !currentWord) {
     return (
@@ -91,7 +381,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
         background: isDark ? "#0f172a" : "#f9fafb",
         color: isDark ? "#e2e8f0" : "#111827"
       }}>
-        Loading...
+        Loading word...
       </div>
     );
   }
@@ -99,22 +389,56 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
   const maxLength = targetWord.length;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const val = e.target.value.slice(0, maxLength);
+    const rawVal = e.target.value;
+    
+    // Handle deletion (Backspace)
+    if (rawVal.length < userInput.length) {
+      setUserInput(rawVal);
+      return;
+    }
 
-    // Score logic: +1 for correct letter, -1 for incorrect
-    if (val.length > userInput.length) {
-      const charIndex = (e.target.selectionStart || val.length) - 1;
-      if (charIndex >= 0 && charIndex < targetWord.length) {
-        const char = val[charIndex];
-        if (char.toLowerCase() === targetWord[charIndex].toLowerCase()) {
-          setScore(s => s + 1);
-        } else {
-          setScore(s => s - 1);
-        }
+    // Handle addition (Typing)
+    const newChar = rawVal.slice(-1);
+    
+    // Determine the position we are trying to fill
+    let targetIndex = userInput.length;
+    
+    // If we are not at the start, check if the previous character was correct
+    if (userInput.length > 0) {
+      const lastIndex = userInput.length - 1;
+      const lastChar = userInput[lastIndex];
+      const expectedLastChar = targetWord[lastIndex];
+      
+      // If the last character was wrong, we want to overwrite it (stay at same position)
+      if (lastChar.toLowerCase() !== expectedLastChar.toLowerCase()) {
+        targetIndex = lastIndex;
       }
     }
 
-    setUserInput(val);
+    // If we are beyond the word length (and not overwriting the last char), ignore
+    if (targetIndex >= targetWord.length) {
+      return;
+    }
+
+    // Calculate the new input string
+    let newUserInput;
+    if (targetIndex === userInput.length) {
+      // Appending
+      newUserInput = userInput + newChar;
+    } else {
+      // Replacing (overwriting the wrong character)
+      newUserInput = userInput.slice(0, targetIndex) + newChar;
+    }
+
+    // Update Score
+    if (newChar.toLowerCase() === targetWord[targetIndex].toLowerCase()) {
+      setScore(s => s + 1);
+    } else {
+      setScore(s => s - 1);
+      setTypoCount(c => c + 1);
+    }
+
+    setUserInput(newUserInput);
   };
 
   const handleShowAnswer = () => {
@@ -147,7 +471,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
         marginBottom: "48px"
       }}>
         <button
-          onClick={onBack}
+          onClick={handleEndSession}
           style={{
             background: "transparent",
             border: `1px solid ${isDark ? "#334155" : "#cbd5e1"}`,
@@ -161,7 +485,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
             gap: "8px"
           }}
         >
-          ← Dashboard
+          End Session
         </button>
         <div style={{ fontSize: "24px", fontWeight: "bold", color: "#10b981" }}>
           Score: {score}
@@ -230,6 +554,17 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
             const isCorrect = userChar.toLowerCase() === char.toLowerCase();
             const hasChar = userChar !== "";
             
+            // Determine active index
+            let activeIndex = userInput.length;
+            if (userInput.length > 0) {
+              const lastIdx = userInput.length - 1;
+              const lastChar = userInput[lastIdx];
+              const expected = targetWord[lastIdx];
+              if (lastChar.toLowerCase() !== expected.toLowerCase()) {
+                activeIndex = lastIdx;
+              }
+            }
+
             let borderColor = isDark ? "#475569" : "#cbd5e1";
             let bgColor = isDark ? "#0f172a" : "#f8fafc";
             let textColor = isDark ? "#e2e8f0" : "#1e293b";
@@ -244,7 +579,9 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
                 bgColor = "rgba(239, 68, 68, 0.1)";
                 textColor = "#ef4444";
               }
-            } else if (index === userInput.length) {
+            }
+            
+            if (index === activeIndex) {
                // Current active cursor position
                borderColor = "#6366f1"; // Indigo
             }
@@ -294,25 +631,7 @@ export const SpellingActivity: React.FC<SpellingActivityProps> = ({ onBack }) =>
             Show Answer
           </button>
           
-          <button
-            onClick={handleNext}
-            style={{
-              padding: "12px 32px",
-              borderRadius: "12px",
-              border: "none",
-              background: "#6366f1",
-              color: "white",
-              fontSize: "16px",
-              fontWeight: "600",
-              cursor: "pointer",
-              boxShadow: "0 4px 12px rgba(99, 102, 241, 0.3)",
-              display: "flex",
-              alignItems: "center",
-              gap: "8px"
-            }}
-          >
-            Next Word →
-          </button>
+
         </div>
 
       </div>

@@ -66,6 +66,28 @@ class VocabularyResponse(BaseModel):
     id: int
     czech: str
     english: str
+    category: Optional[str] = None
+    level: Optional[str] = None
 
     class Config:
         from_attributes = True
+
+
+class CategoryLevelPair(BaseModel):
+    """Schema for category-level combination."""
+    category: str
+    level: str
+
+class VocabularyFilters(BaseModel):
+    """Schema for available vocabulary filters."""
+
+    categories: list[str]
+    levels: list[str]
+    combinations: list[CategoryLevelPair]
+
+
+class WordAttemptCreate(BaseModel):
+    """Schema for creating a word attempt."""
+
+    word_id: int
+    typo_count: int

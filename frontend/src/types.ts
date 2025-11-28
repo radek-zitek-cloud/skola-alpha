@@ -17,4 +17,10 @@ export interface OAuthConfig {
   google_client_id: string;
 }
 
+export interface VocabularyFilters {
+  categories: string[];
+  levels: string[];
+  combinations: { category: string; level: string }[];
+}
+
 export type Theme = "light" | "dark";

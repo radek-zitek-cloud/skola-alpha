@@ -35,6 +35,13 @@ uv run pytest tests/test_health.py  # Run single test file
 uv run pytest --cov=app         # With coverage
 ```
 
+**Testing Guidelines:**
+
+- **NEVER** modify the production database (`skola_alpha.db`) during tests.
+- Always use the `client` and `db_session` fixtures provided in `tests/conftest.py`.
+- These fixtures ensure tests run against an isolated in-memory SQLite database.
+- Do not import `engine` or `SessionLocal` from `app.database` inside test files; use the fixtures instead.
+
 **Code quality:**
 
 ```bash

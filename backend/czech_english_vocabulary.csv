@@ -1,0 +1,2123 @@
+cz_word,en_word,category,level
+já,I,pronoun,1
+ty,you,pronoun,1
+ano,yes,basic word,1
+ne,no,basic word,1
+voda,water,drink,1
+chléb,bread,food,1
+pes,dog,animal,1
+kočka,cat,animal,1
+dům,house,building,1
+auto,car,vehicle,1
+matka,mother,family,2
+otec,father,family,2
+syn,son,family,2
+dcera,daughter,family,2
+bratr,brother,family,2
+sestra,sister,family,2
+stůl,table,furniture,2
+židle,chair,furniture,2
+postel,bed,furniture,2
+okno,window,building part,2
+dveře,door,building part,2
+kniha,book,object,2
+pero,pen,object,2
+papír,paper,object,2
+ruka,hand,body part,2
+noha,foot,body part,2
+hlava,head,body part,2
+oko,eye,body part,2
+ucho,ear,body part,2
+nos,nose,body part,2
+jablko,apple,fruit,3
+banán,banana,fruit,3
+pomeranč,orange,fruit,3
+hruška,pear,fruit,3
+mrkev,carrot,vegetable,3
+rajče,tomato,vegetable,3
+brambor,potato,vegetable,3
+salát,salad,vegetable,3
+mléko,milk,drink,3
+káva,coffee,drink,3
+čaj,tea,drink,3
+džus,juice,drink,3
+maso,meat,food,3
+ryba,fish,food,3
+sýr,cheese,food,3
+vejce,egg,food,3
+kráva,cow,animal,3
+kůň,horse,animal,3
+prase,pig,animal,3
+ovce,sheep,animal,3
+slepice,chicken,animal,3
+ptáček,bird,animal,3
+strom,tree,nature,3
+květina,flower,nature,3
+tráva,grass,nature,3
+nebe,sky,nature,3
+slunce,sun,nature,3
+měsíc,moon,nature,3
+hvězda,star,nature,3
+hora,mountain,nature,3
+řeka,river,nature,3
+moře,sea,nature,3
+les,forest,nature,3
+pole,field,nature,3
+déšť,rain,weather,3
+sníh,snow,weather,3
+vítr,wind,weather,3
+bouřka,storm,weather,3
+mrak,cloud,weather,3
+červený,red,color,3
+modrý,blue,color,3
+zelený,green,color,3
+žlutý,yellow,color,3
+černý,black,color,3
+bílý,white,color,3
+jeden,one,number,4
+dva,two,number,4
+tři,three,number,4
+čtyři,four,number,4
+pět,five,number,4
+šest,six,number,4
+sedm,seven,number,4
+osm,eight,number,4
+devět,nine,number,4
+deset,ten,number,4
+velký,big,adjective,4
+malý,small,adjective,4
+vysoký,tall,adjective,4
+nízký,short,adjective,4
+starý,old,adjective,4
+mladý,young,adjective,4
+nový,new,adjective,4
+rychlý,fast,adjective,4
+pomalý,slow,adjective,4
+horký,hot,adjective,4
+studený,cold,adjective,4
+dobrý,good,adjective,4
+špatný,bad,adjective,4
+krásný,beautiful,adjective,4
+ošklivý,ugly,adjective,4
+silný,strong,adjective,4
+slabý,weak,adjective,4
+tlustý,fat,adjective,4
+hubený,thin,adjective,4
+veselý,happy,adjective,4
+smutný,sad,adjective,4
+jít,go,verb,4
+přijít,come,verb,4
+jíst,eat,verb,4
+pít,drink,verb,4
+spát,sleep,verb,4
+stát,stand,verb,4
+sedět,sit,verb,4
+ležet,lie,verb,4
+běžet,run,verb,4
+chodit,walk,verb,4
+mluvit,speak,verb,4
+slyšet,hear,verb,4
+vidět,see,verb,4
+dívat se,look,verb,4
+poslouchat,listen,verb,4
+myslet,think,verb,4
+vědět,know,verb,4
+rozumět,understand,verb,4
+učit se,learn,verb,4
+učit,teach,verb,4
+pracovat,work,verb,4
+hrát,play,verb,4
+zpívat,sing,verb,4
+tancovat,dance,verb,4
+číst,read,verb,4
+psát,write,verb,4
+kreslit,draw,verb,4
+malovat,paint,verb,4
+dávat,give,verb,4
+brát,take,verb,4
+kupovat,buy,verb,4
+prodávat,sell,verb,4
+škola,school,building,4
+třída,classroom,place,4
+učitel,teacher,profession,4
+žák,student,profession,4
+lékař,doctor,profession,4
+sestra,nurse,profession,4
+policista,policeman,profession,4
+hasič,firefighter,profession,4
+kuchař,cook,profession,4
+řidič,driver,profession,4
+město,city,place,5
+vesnice,village,place,5
+ulice,street,place,5
+náměstí,square,place,5
+park,park,place,5
+zahrada,garden,place,5
+obchod,shop,building,5
+supermarket,supermarket,building,5
+nemocnice,hospital,building,5
+lékárna,pharmacy,building,5
+restaurace,restaurant,building,5
+kavárna,cafe,building,5
+hotel,hotel,building,5
+banka,bank,building,5
+pošta,post office,building,5
+knihovna,library,building,5
+muzeum,museum,building,5
+divadlo,theater,building,5
+kino,cinema,building,5
+kostel,church,building,5
+vlak,train,vehicle,5
+autobus,bus,vehicle,5
+tramvaj,tram,vehicle,5
+metro,metro,vehicle,5
+letadlo,airplane,vehicle,5
+loď,boat,vehicle,5
+kolo,bicycle,vehicle,5
+motorka,motorcycle,vehicle,5
+taxík,taxi,vehicle,5
+kamion,truck,vehicle,5
+pondělí,Monday,day,5
+úterý,Tuesday,day,5
+středa,Wednesday,day,5
+čtvrtek,Thursday,day,5
+pátek,Friday,day,5
+sobota,Saturday,day,5
+neděle,Sunday,day,5
+den,day,time,5
+noc,night,time,5
+ráno,morning,time,5
+odpoledne,afternoon,time,5
+večer,evening,time,5
+týden,week,time,5
+měsíc,month,time,5
+rok,year,time,5
+hodina,hour,time,5
+minuta,minute,time,5
+sekunda,second,time,5
+dnes,today,time,5
+včera,yesterday,time,5
+zítra,tomorrow,time,5
+teď,now,time,5
+brzy,soon,time,5
+pozdě,late,time,5
+vždy,always,time,5
+nikdy,never,time,5
+někdy,sometimes,time,5
+často,often,time,5
+zřídka,rarely,time,5
+lednor,January,month,5
+únor,February,month,5
+březen,March,month,5
+duben,April,month,5
+květen,May,month,5
+červen,June,month,5
+červenec,July,month,5
+srpen,August,month,5
+září,September,month,5
+říjen,October,month,5
+listopad,November,month,5
+prosinec,December,month,5
+jaro,spring,season,5
+léto,summer,season,5
+podzim,autumn,season,5
+zima,winter,season,5
+teplý,warm,adjective,5
+chladný,cool,adjective,5
+mokrý,wet,adjective,5
+suchý,dry,adjective,5
+čistý,clean,adjective,5
+špinavý,dirty,adjective,5
+plný,full,adjective,5
+prázdný,empty,adjective,5
+otevřený,open,adjective,5
+zavřený,closed,adjective,5
+hlasitý,loud,adjective,5
+tichý,quiet,adjective,5
+těžký,heavy,adjective,5
+lehký,light,adjective,5
+tvrdý,hard,adjective,5
+měkký,soft,adjective,5
+hladký,smooth,adjective,5
+drsný,rough,adjective,5
+ostrý,sharp,adjective,5
+tupý,blunt,adjective,5
+rovný,straight,adjective,5
+křivý,curved,adjective,5
+kulatý,round,adjective,5
+hranatý,square,adjective,5
+dlouhý,long,adjective,5
+krátký,short,adjective,5
+široký,wide,adjective,5
+úzký,narrow,adjective,5
+hluboký,deep,adjective,5
+mělký,shallow,adjective,5
+drahý,expensive,adjective,5
+levný,cheap,adjective,5
+bohatý,rich,adjective,5
+chudý,poor,adjective,5
+mladý,young,adjective,5
+svobodný,single,adjective,5
+ženatý,married,adjective,5
+nemocný,sick,adjective,5
+zdravý,healthy,adjective,5
+unavený,tired,adjective,5
+čerstvý,fresh,adjective,5
+hladový,hungry,adjective,5
+žíznivý,thirsty,adjective,5
+chytrý,smart,adjective,5
+hloupý,stupid,adjective,5
+poctivý,honest,adjective,5
+lhavý,dishonest,adjective,5
+odvážný,brave,adjective,5
+zbabělý,cowardly,adjective,5
+trpělivý,patient,adjective,5
+netrpělivý,impatient,adjective,5
+přátelský,friendly,adjective,5
+nepřátelský,unfriendly,adjective,5
+laskavý,kind,adjective,5
+krutý,cruel,adjective,5
+zábavný,funny,adjective,5
+nudný,boring,adjective,5
+zajímavý,interesting,adjective,5
+důležitý,important,adjective,5
+nebezpečný,dangerous,adjective,5
+bezpečný,safe,adjective,5
+správný,correct,adjective,5
+špatný,wrong,adjective,5
+možný,possible,adjective,5
+nemožný,impossible,adjective,5
+snadný,easy,adjective,5
+obtížný,difficult,adjective,5
+hezký,pretty,adjective,5
+příjemný,pleasant,adjective,5
+nepříjemný,unpleasant,adjective,5
+zvláštní,strange,adjective,5
+běžný,common,adjective,5
+vzácný,rare,adjective,5
+cizí,foreign,adjective,5
+známý,familiar,adjective,5
+neznámý,unknown,adjective,5
+podobný,similar,adjective,5
+odlišný,different,adjective,5
+stejný,same,adjective,5
+a,and,conjunction,6
+ale,but,conjunction,6
+nebo,or,conjunction,6
+protože,because,conjunction,6
+když,when,conjunction,6
+kde,where,question word,6
+co,what,question word,6
+kdo,who,question word,6
+proč,why,question word,6
+jak,how,question word,6
+kolik,how many,question word,6
+který,which,question word,6
+v,in,preposition,6
+na,on,preposition,6
+do,to,preposition,6
+z,from,preposition,6
+pod,under,preposition,6
+nad,above,preposition,6
+před,before,preposition,6
+za,behind,preposition,6
+mezi,between,preposition,6
+vedle,next to,preposition,6
+u,at,preposition,6
+o,about,preposition,6
+s,with,preposition,6
+bez,without,preposition,6
+pro,for,preposition,6
+podle,according to,preposition,6
+proti,against,preposition,6
+přes,across,preposition,6
+kolem,around,preposition,6
+můj,my,possessive,6
+tvůj,your,possessive,6
+jeho,his,possessive,6
+její,her,possessive,6
+náš,our,possessive,6
+váš,your plural,possessive,6
+jejich,their,possessive,6
+tento,this,demonstrative,6
+ten,that,demonstrative,6
+tyto,these,demonstrative,6
+ti,those,demonstrative,6
+nějaký,some,quantifier,6
+každý,every,quantifier,6
+všechno,everything,quantifier,6
+nic,nothing,quantifier,6
+někdo,someone,pronoun,6
+nikdo,nobody,pronoun,6
+všichni,everyone,pronoun,6
+několik,several,quantifier,6
+mnoho,many,quantifier,6
+málo,few,quantifier,6
+více,more,quantifier,6
+méně,less,quantifier,6
+nejvíce,most,quantifier,6
+nejméně,least,quantifier,6
+dost,enough,quantifier,6
+příliš,too much,quantifier,6
+téměř,almost,adverb,6
+také,also,adverb,6
+jen,only,adverb,6
+ještě,still,adverb,6
+už,already,adverb,6
+znovu,again,adverb,6
+zpět,back,adverb,6
+tam,there,adverb,6
+zde,here,adverb,6
+nahoru,up,adverb,6
+dolů,down,adverb,6
+dovnitř,inside,adverb,6
+ven,outside,adverb,6
+doprava,right,direction,6
+doleva,left,direction,6
+dopředu,forward,direction,6
+dozadu,backward,direction,6
+rychle,quickly,adverb,6
+pomalu,slowly,adverb,6
+dobře,well,adverb,6
+špatně,badly,adverb,6
+hlasitě,loudly,adverb,6
+ticho,quietly,adverb,6
+hodně,much,adverb,6
+trochu,little,adverb,6
+velmi,very,adverb,6
+docela,quite,adverb,6
+úplně,completely,adverb,6
+částečně,partially,adverb,6
+skoro,nearly,adverb,6
+právě,just,adverb,6
+možná,maybe,adverb,6
+určitě,certainly,adverb,6
+pravděpodobně,probably,adverb,6
+bohužel,unfortunately,adverb,6
+naštěstí,fortunately,adverb,6
+prosím,please,polite word,6
+děkuji,thank you,polite word,6
+promiňte,sorry,polite word,6
+pardon,excuse me,polite word,6
+dobrý den,hello,greeting,6
+ahoj,hi,greeting,6
+nashledanou,goodbye,greeting,6
+čau,bye,greeting,6
+dobré ráno,good morning,greeting,6
+dobrý večer,good evening,greeting,6
+dobrou noc,good night,greeting,6
+jak se máš,how are you,phrase,6
+dobře,fine,phrase,6
+špatně,bad,phrase,6
+tak tak,so so,phrase,6
+co děláš,what are you doing,phrase,6
+těší mě,nice to meet you,phrase,6
+rád tě vidím,glad to see you,phrase,6
+jak se jmenuješ,what is your name,phrase,6
+jmenuji se,my name is,phrase,6
+odkud jsi,where are you from,phrase,6
+jsem z,I am from,phrase,6
+kolik je ti let,how old are you,phrase,6
+je mi,I am,phrase,6
+mluvíš anglicky,do you speak english,phrase,6
+mluvím trochu,I speak a little,phrase,6
+nerozumím,I dont understand,phrase,6
+rozumím,I understand,phrase,6
+mohl bys opakovat,could you repeat,phrase,6
+pomalu prosím,slowly please,phrase,6
+co to znamená,what does it mean,phrase,6
+jak se to řekne,how do you say it,phrase,6
+nevím,I dont know,phrase,6
+vím,I know,phrase,6
+myslím si,I think,phrase,6
+souhlasím,I agree,phrase,6
+nesouhlasím,I disagree,phrase,6
+máš pravdu,you are right,phrase,6
+to je pravda,thats true,phrase,6
+to není pravda,thats not true,phrase,6
+pomoc,help,noun,7
+problém,problem,noun,7
+otázka,question,noun,7
+odpověď,answer,noun,7
+pravda,truth,noun,7
+lež,lie,noun,7
+důvod,reason,noun,7
+příčina,cause,noun,7
+následek,consequence,noun,7
+výsledek,result,noun,7
+začátek,beginning,noun,7
+konec,end,noun,7
+střed,middle,noun,7
+strana,side,noun,7
+část,part,noun,7
+celek,whole,noun,7
+číslo,number,noun,7
+slovo,word,noun,7
+věta,sentence,noun,7
+jazyk,language,noun,7
+jméno,name,noun,7
+příjmení,surname,noun,7
+adresa,address,noun,7
+telefon,telephone,noun,7
+počítač,computer,noun,7
+internet,internet,noun,7
+email,email,noun,7
+zpráva,message,noun,7
+dopis,letter,noun,7
+balík,package,noun,7
+peníze,money,noun,7
+cena,price,noun,7
+náklady,cost,noun,7
+hodnota,value,noun,7
+plat,salary,noun,7
+práce,work,noun,7
+zaměstnání,job,noun,7
+povolání,profession,noun,7
+kariéra,career,noun,7
+firma,company,noun,7
+továrna,factory,noun,7
+kancelář,office,noun,7
+schůzka,meeting,noun,7
+jednání,negotiation,noun,7
+smlouva,contract,noun,7
+dohoda,agreement,noun,7
+projekt,project,noun,7
+plán,plan,noun,7
+cíl,goal,noun,7
+úkol,task,noun,7
+povinnost,duty,noun,7
+zodpovědnost,responsibility,noun,7
+právo,right,noun,7
+zákon,law,noun,7
+pravidlo,rule,noun,7
+předpis,regulation,noun,7
+pokyn,instruction,noun,7
+příkaz,command,noun,7
+rada,advice,noun,7
+doporučení,recommendation,noun,7
+nápad,idea,noun,7
+myšlenka,thought,noun,7
+názor,opinion,noun,7
+pocit,feeling,noun,7
+emoce,emotion,noun,7
+láska,love,noun,7
+nenávist,hate,noun,7
+radost,joy,noun,7
+smutek,sadness,noun,7
+strach,fear,noun,7
+odvaha,courage,noun,7
+naděje,hope,noun,7
+důvěra,trust,noun,7
+respekt,respect,noun,7
+úcta,esteem,noun,7
+hanba,shame,noun,7
+hrdost,pride,noun,7
+zlost,anger,noun,7
+vztek,rage,noun,7
+klid,calm,noun,7
+stres,stress,noun,7
+tlak,pressure,noun,7
+napětí,tension,noun,7
+uvolnění,relaxation,noun,7
+odpočinek,rest,noun,7
+zábava,fun,noun,7
+potěšení,pleasure,noun,7
+štěstí,happiness,noun,7
+spokojenost,satisfaction,noun,7
+nespokojenost,dissatisfaction,noun,7
+zklamání,disappointment,noun,7
+překvapení,surprise,noun,7
+zájem,interest,noun,7
+pozornost,attention,noun,7
+koncentrace,concentration,noun,7
+paměť,memory,noun,7
+vzpomínka,memory recall,noun,7
+zkušenost,experience,noun,7
+znalost,knowledge,noun,7
+dovednost,skill,noun,7
+schopnost,ability,noun,7
+talent,talent,noun,7
+inteligence,intelligence,noun,7
+moudrost,wisdom,noun,7
+hloupost,stupidity,noun,7
+chyba,mistake,noun,7
+omyl,error,noun,7
+úspěch,success,noun,7
+neúspěch,failure,noun,7
+vítězství,victory,noun,7
+prohra,defeat,noun,7
+výhra,win,noun,7
+soutěž,competition,noun,7
+zápas,match,noun,7
+hra,game,noun,7
+sport,sport,noun,7
+fotbal,football,sport,7
+hokej,hockey,sport,7
+tenis,tennis,sport,7
+basketbal,basketball,sport,7
+volejbal,volleyball,sport,7
+plavání,swimming,sport,7
+běh,running,sport,7
+jízda na kole,cycling,sport,7
+lyžování,skiing,sport,7
+bruslení,skating,sport,7
+gymnastika,gymnastics,sport,7
+box,boxing,sport,7
+zápas,wrestling,sport,7
+jóga,yoga,sport,7
+hudba,music,art,7
+píseň,song,art,7
+melodie,melody,art,7
+rytmus,rhythm,art,7
+tón,tone,art,7
+nástroj,instrument,art,7
+kytara,guitar,instrument,7
+piano,piano,instrument,7
+housle,violin,instrument,7
+flétna,flute,instrument,7
+buben,drum,instrument,7
+zpěvák,singer,profession,7
+muzikant,musician,profession,7
+skladatel,composer,profession,7
+umění,art,noun,7
+obraz,painting,art,7
+socha,sculpture,art,7
+fotografie,photography,art,7
+kamera,camera,object,7
+film,film,art,7
+herec,actor,profession,7
+herečka,actress,profession,7
+režisér,director,profession,7
+spisovatel,writer,profession,7
+básník,poet,profession,7
+román,novel,literature,7
+povídka,story,literature,7
+báseň,poem,literature,7
+drama,drama,literature,7
+komedie,comedy,literature,7
+tragédie,tragedy,literature,7
+dobrodružství,adventure,literature,7
+fantazie,fantasy,literature,7
+věda,science,noun,7
+výzkum,research,noun,7
+experiment,experiment,noun,7
+teorie,theory,noun,7
+fakt,fact,noun,7
+důkaz,proof,noun,7
+matematika,mathematics,subject,7
+fyzika,physics,subject,7
+chemie,chemistry,subject,7
+biologie,biology,subject,7
+geografie,geography,subject,7
+historie,history,subject,7
+ekonomie,economics,subject,7
+politika,politics,subject,7
+filozofie,philosophy,subject,7
+psychologie,psychology,subject,7
+sociologie,sociology,subject,7
+antropologie,anthropology,subject,7
+archeologie,archaeology,subject,7
+astronomie,astronomy,subject,7
+geologie,geology,subject,7
+ekologie,ecology,subject,7
+technologie,technology,noun,7
+vynález,invention,noun,7
+stroj,machine,noun,7
+zařízení,device,noun,7
+nástroj,tool,noun,7
+materiál,material,noun,7
+látka,substance,noun,7
+kov,metal,material,7
+železo,iron,material,7
+ocel,steel,material,7
+měď,copper,material,7
+zlato,gold,material,7
+stříbro,silver,material,7
+dřevo,wood,material,7
+kámen,stone,material,7
+sklo,glass,material,7
+plast,plastic,material,7
+guma,rubber,material,7
+látka,fabric,material,7
+bavlna,cotton,material,7
+vlna,wool,material,7
+hedvábí,silk,material,7
+kůže,leather,material,7
+začít,begin,verb,7
+začínat,start,verb,7
+skončit,finish,verb,7
+končit,end,verb,7
+pokračovat,continue,verb,7
+zastavit,stop,verb,7
+mít,have,verb,7
+nemít,not have,verb,7
+dát,give,verb,7
+vzít,take,verb,7
+dostat,get,verb,7
+poslat,send,verb,7
+přinést,bring,verb,7
+odnést,take away,verb,7
+položit,put,verb,7
+umístit,place,verb,7
+vzít,pick up,verb,7
+držet,hold,verb,7
+pustit,release,verb,7
+hodit,throw,verb,7
+chytit,catch,verb,7
+tlačit,push,verb,7
+táhnout,pull,verb,7
+zvedat,lift,verb,7
+spustit,lower,verb,7
+nést,carry,verb,7
+otevřít,open,verb,7
+zavřít,close,verb,7
+zamknout,lock,verb,7
+odemknout,unlock,verb,7
+zapnout,turn on,verb,7
+vypnout,turn off,verb,7
+rozsvítit,light up,verb,7
+zhasnout,turn off light,verb,7
+hledat,search,verb,7
+najít,find,verb,7
+ztratit,lose,verb,7
+ukázat,show,verb,7
+schovat,hide,verb,7
+objevit,discover,verb,7
+vynaleznout,invent,verb,7
+vytvořit,create,verb,7
+udělat,make,verb,7
+vyrobit,manufacture,verb,7
+postavit,build,verb,7
+zničit,destroy,verb,7
+rozbít,break,verb,7
+opravit,repair,verb,7
+vylepšit,improve,verb,7
+změnit,change,verb,7
+upravit,modify,verb,7
+zvýšit,increase,verb,7
+snížit,decrease,verb,7
+přidat,add,verb,7
+odebrat,subtract,verb,7
+násobit,multiply,verb,7
+dělit,divide,verb,7
+počítat,count,verb,7
+měřit,measure,verb,7
+vážit,weigh,verb,7
+porovnat,compare,verb,7
+rozlišit,distinguish,verb,7
+spojit,connect,verb,7
+oddělit,separate,verb,7
+smíchat,mix,verb,7
+rozdělit,split,verb,7
+sdílet,share,verb,7
+distribuovat,distribute,verb,7
+shromáždit,gather,verb,7
+sbírat,collect,verb,7
+organizovat,organize,verb,7
+plánovat,plan,verb,7
+připravit,prepare,verb,7
+uspořádat,arrange,verb,7
+řídit,manage,verb,7
+kontrolovat,control,verb,7
+zkontrolovat,check,verb,7
+ověřit,verify,verb,7
+potvrdit,confirm,verb,7
+odmítnout,refuse,verb,7
+zamítnout,reject,verb,7
+přijmout,accept,verb,7
+souhlasit,agree,verb,7
+nesouhlasit,disagree,verb,7
+dovolit,allow,verb,7
+zakázat,forbid,verb,7
+nutit,force,verb,7
+přesvědčit,convince,verb,7
+přemlouvat,persuade,verb,7
+slíbit,promise,verb,7
+dodržet,keep promise,verb,7
+porušit,break promise,verb,7
+lhát,lie,verb,7
+klamat,deceive,verb,7
+podvádět,cheat,verb,7
+krást,steal,verb,7
+ukrást,rob,verb,7
+zaplakat,pay,verb,8
+koupit,buy,verb,8
+prodat,sell,verb,8
+obchodovat,trade,verb,8
+vyměnit,exchange,verb,8
+půjčit,lend,verb,8
+půjčit si,borrow,verb,8
+vrátit,return,verb,8
+ušetřit,save,verb,8
+utratit,spend,verb,8
+plýtvat,waste,verb,8
+investovat,invest,verb,8
+vydělat,earn,verb,8
+ztratit,lose,verb,8
+vyhrát,win,verb,8
+prohrát,lose game,verb,8
+sázet,bet,verb,8
+riskovat,risk,verb,8
+pojistit,insure,verb,8
+chránit,protect,verb,8
+bránit,defend,verb,8
+útočit,attack,verb,8
+bojovat,fight,verb,8
+válčit,war,verb,8
+střílet,shoot,verb,8
+zabít,kill,verb,8
+zemřít,die,verb,8
+žít,live,verb,8
+existovat,exist,verb,8
+přežít,survive,verb,8
+narodit se,be born,verb,8
+vyrůst,grow up,verb,8
+dospět,mature,verb,8
+stárnout,age,verb,8
+vzpomínat,remember,verb,8
+zapomenout,forget,verb,8
+připomínat,remind,verb,8
+snít,dream,verb,8
+přát si,wish,verb,8
+chtít,want,verb,8
+potřebovat,need,verb,8
+muset,must,verb,8
+moci,can,verb,8
+smět,may,verb,8
+měl bys,should,verb,8
+troufat si,dare,verb,8
+zkusit,try,verb,8
+pokusit se,attempt,verb,8
+snažit se,strive,verb,8
+usilovat,endeavor,verb,8
+dosáhnout,achieve,verb,8
+splnit,fulfill,verb,8
+dokončit,complete,verb,8
+uspět,succeed,verb,8
+selhat,fail,verb,8
+zvládnout,manage,verb,8
+překonat,overcome,verb,8
+porazit,defeat,verb,8
+vyhrát,win,verb,8
+triumfovat,triumph,verb,8
+oslavovat,celebrate,verb,8
+slavit,celebrate,verb,8
+gratulovat,congratulate,verb,8
+blahopřát,wish well,verb,8
+děkovat,thank,verb,8
+omlouvat se,apologize,verb,8
+litovat,regret,verb,8
+kát se,repent,verb,8
+odpustit,forgive,verb,8
+trestat,punish,verb,8
+odměnit,reward,verb,8
+pochválit,praise,verb,8
+kritizovat,criticize,verb,8
+obviňovat,blame,verb,8
+obhajovat,defend,verb,8
+soudить,judge,verb,8
+rozhodovat,decide,verb,8
+volit,choose,verb,8
+vybrat,select,verb,8
+preferovat,prefer,verb,8
+upřednostňovat,prioritize,verb,8
+zvažovat,consider,verb,8
+přemýšlet,think,verb,8
+uvažovat,ponder,verb,8
+analyzovat,analyze,verb,8
+studovat,study,verb,8
+zkoumat,examine,verb,8
+pozorovat,observe,verb,8
+sledovat,watch,verb,8
+monitorovat,monitor,verb,8
+kontrolovat,supervise,verb,8
+dohlížet,oversee,verb,8
+řídit,direct,verb,8
+vést,lead,verb,8
+následovat,follow,verb,8
+provázet,accompany,verb,8
+doprovázet,escort,verb,8
+čekat,wait,verb,8
+vyčkat,await,verb,8
+očekávat,expect,verb,8
+předvídat,predict,verb,8
+odhadovat,estimate,verb,8
+hádat,guess,verb,8
+předpokládat,assume,verb,8
+doufat,hope,verb,8
+obávat se,fear,verb,8
+bát se,be afraid,verb,8
+obávat,worry,verb,8
+panikařit,panic,verb,8
+nervózně,nervously,adverb,8
+uklidnit,calm down,verb,8
+utěšit,comfort,verb,8
+podporovat,support,verb,8
+povzbuzovat,encourage,verb,8
+motivovat,motivate,verb,8
+inspirovat,inspire,verb,8
+ovlivňovat,influence,verb,8
+působit,affect,verb,8
+přesvědčovat,persuade,verb,8
+manipulovat,manipulate,verb,8
+kontrolovat,control,verb,8
+ovládat,dominate,verb,8
+podřídit,subordinate,verb,8
+respektovat,respect,verb,8
+ctít,honor,verb,8
+uctívat,worship,verb,8
+obdivovat,admire,verb,8
+závidět,envy,verb,8
+žárlit,be jealous,verb,8
+milovat,love,verb,8
+nenávidět,hate,verb,8
+snášet,tolerate,verb,8
+trpět,suffer,verb,8
+bolet,hurt,verb,8
+léčit,heal,verb,8
+ošetřit,treat,verb,8
+pečovat,care,verb,8
+starat se,take care,verb,8
+pomáhat,help,verb,8
+zachránit,save,verb,8
+zachraňovat,rescue,verb,8
+ohrožovat,endanger,verb,8
+škodit,harm,verb,8
+ublížit,hurt,verb,8
+zranit,injure,verb,8
+krvácet,bleed,verb,8
+hojit se,heal,verb,8
+zotavit se,recover,verb,8
+uzdravit se,get well,verb,8
+onemocnět,get sick,verb,8
+nachladit se,catch cold,verb,8
+kašlat,cough,verb,8
+kýchat,sneeze,verb,8
+zvracet,vomit,verb,8
+pocit nevolnosti,feel nauseous,verb,8
+mdlit se,feel dizzy,verb,8
+kolabovat,collapse,verb,8
+omdlít,faint,verb,8
+probouzet se,wake up,verb,8
+usínat,fall asleep,verb,8
+dřímat,nap,verb,8
+odpočívat,rest,verb,8
+relaxovat,relax,verb,8
+bavit se,have fun,verb,8
+užívat si,enjoy,verb,8
+smát se,laugh,verb,8
+usmívat se,smile,verb,8
+plakat,cry,verb,8
+vzlykat,sob,verb,8
+křičet,scream,verb,8
+volat,call,verb,8
+šeptat,whisper,verb,8
+mumlat,mumble,verb,8
+kečovat,stutter,verb,8
+diskutovat,discuss,verb,8
+debatovat,debate,verb,8
+argumentovat,argue,verb,8
+hádať se,quarrel,verb,8
+hádat se,fight verbally,verb,8
+svářet se,dispute,verb,8
+mírit,reconcile,verb,8
+smířit se,make peace,verb,8
+domluvit se,agree upon,verb,8
+vyjednávat,negotiate,verb,8
+komunikovat,communicate,verb,8
+konverzovat,converse,verb,8
+povídat si,chat,verb,8
+klábosit,gossip,verb,8
+tlachat,chatter,verb,8
+vyprávět,tell,verb,8
+popisovat,describe,verb,8
+vysvětlovat,explain,verb,8
+prezentovat,present,verb,8
+demonstrovat,demonstrate,verb,8
+představit,introduce,verb,8
+informovat,inform,verb,8
+oznámit,announce,verb,8
+hlásit,report,verb,8
+varovat,warn,verb,8
+upozornit,alert,verb,8
+navrhnout,propose,verb,8
+doporučit,recommend,verb,8
+radit,advise,verb,8
+konzultovat,consult,verb,8
+ptát se,ask,verb,8
+dotazovat se,inquire,verb,8
+vyptat se,interrogate,verb,8
+odpovídat,answer,verb,8
+reagovat,react,verb,8
+odpovědět,reply,verb,8
+opakovat,repeat,verb,8
+zdůraznit,emphasize,verb,8
+podtrhnout,underline,verb,8
+zvýraznit,highlight,verb,8
+vyzdvihnout,accentuate,verb,8
+citovat,quote,verb,8
+parafrázovat,paraphrase,verb,8
+překládat,translate,verb,8
+tlumočit,interpret,verb,8
+vzdělání,education,noun,8
+vzdělávat,educate,verb,8
+škola,school,noun,8
+univerzita,university,noun,8
+kolej,college,noun,8
+fakulta,faculty,noun,8
+katedra,department,noun,8
+obor,field,noun,8
+studijní program,program,noun,8
+kurz,course,noun,8
+předmět,subject,noun,8
+hodina,lesson,noun,8
+přednáška,lecture,noun,8
+seminář,seminar,noun,8
+cvičení,exercise,noun,8
+praktikum,practicum,noun,8
+laboratoř,laboratory,noun,8
+knihovna,library,noun,8
+učebnice,textbook,noun,8
+poznámka,note,noun,8
+sešit,notebook,noun,8
+test,test,noun,8
+zkouška,exam,noun,8
+známka,grade,noun,8
+diplom,diploma,noun,8
+titul,degree,noun,8
+certifikát,certificate,noun,8
+absolvování,graduation,noun,8
+abiturient,graduate,noun,8
+student,student,noun,8
+spolužák,classmate,noun,8
+profesor,professor,noun,8
+pedagog,educator,noun,8
+tutor,tutor,noun,8
+mentor,mentor,noun,8
+ředitel,principal,noun,8
+děkan,dean,noun,8
+rektor,rector,noun,8
+akademik,academic,noun,8
+vědec,scientist,noun,8
+badatel,researcher,noun,8
+inovátor,innovator,noun,8
+podnikatel,entrepreneur,noun,8
+manažer,manager,noun,8
+vedoucí,supervisor,noun,8
+šéf,boss,noun,8
+kolega,colleague,noun,8
+partner,partner,noun,8
+konkurent,competitor,noun,8
+rival,rival,noun,8
+spojenec,ally,noun,8
+přítel,friend,noun,8
+kamarád,buddy,noun,8
+známý,acquaintance,noun,8
+soused,neighbor,noun,8
+cizinec,stranger,noun,8
+turista,tourist,noun,8
+návštěvník,visitor,noun,8
+host,guest,noun,8
+zákazník,customer,noun,8
+klient,client,noun,8
+pacient,patient,noun,8
+občan,citizen,noun,8
+obyvatel,resident,noun,8
+imigrant,immigrant,noun,8
+emigrant,emigrant,noun,8
+uprchlík,refugee,noun,8
+mezinárodní,international,adjective,8
+globální,global,adjective,8
+regionální,regional,adjective,8
+místní,local,adjective,8
+venkovský,rural,adjective,8
+městský,urban,adjective,8
+domácí,domestic,adjective,8
+oficiální,official,adjective,8
+neoficiální,unofficial,adjective,8
+formální,formal,adjective,8
+neformální,informal,adjective,8
+veřejný,public,adjective,8
+soukromý,private,adjective,8
+tajný,secret,adjective,8
+důvěrný,confidential,adjective,8
+osobní,personal,adjective,8
+profesionální,professional,adjective,8
+amatérský,amateur,adjective,8
+zkušený,experienced,adjective,8
+nezkušený,inexperienced,adjective,8
+kvalifikovaný,qualified,adjective,8
+nekvalifikovaný,unqualified,adjective,8
+odborný,expert,adjective,8
+specializovaný,specialized,adjective,8
+obecný,general,adjective,8
+specifický,specific,adjective,8
+konkrétní,concrete,adjective,8
+abstraktní,abstract,adjective,8
+teoretický,theoretical,adjective,8
+praktický,practical,adjective,8
+empirický,empirical,adjective,8
+vědecký,scientific,adjective,8
+umělecký,artistic,adjective,8
+technický,technical,adjective,8
+mechanický,mechanical,adjective,8
+elektrický,electrical,adjective,8
+elektronický,electronic,adjective,8
+digitální,digital,adjective,8
+analogový,analog,adjective,8
+moderní,modern,adjective,8
+tradiční,traditional,adjective,8
+současný,contemporary,adjective,8
+historický,historical,adjective,8
+prehistorický,prehistoric,adjective,8
+starověký,ancient,adjective,8
+středověký,medieval,adjective,8
+renesanční,renaissance,adjective,8
+barokní,baroque,adjective,8
+klasický,classical,adjective,8
+romantický,romantic,adjective,8
+realistický,realistic,adjective,8
+surrealistický,surrealistic,adjective,8
+impresionistický,impressionistic,adjective,8
+expresionistický,expressionistic,adjective,8
+abstraktní,abstract,adjective,8
+figurativní,figurative,adjective,8
+minimalistický,minimalistic,adjective,8
+maximalistický,maximalistic,adjective,8
+elegantní,elegant,adjective,8
+jednoduchý,simple,adjective,8
+složitý,complex,adjective,8
+komplikovaný,complicated,adjective,8
+sofistikovaný,sophisticated,adjective,8
+primitivní,primitive,adjective,8
+základní,basic,adjective,8
+pokročilý,advanced,adjective,8
+elementární,elementary,adjective,8
+fundamentální,fundamental,adjective,8
+zásadní,essential,adjective,8
+významný,significant,adjective,8
+bezvýznamný,insignificant,adjective,8
+důležitý,important,adjective,8
+nedůležitý,unimportant,adjective,8
+relevantní,relevant,adjective,8
+irelevantní,irrelevant,adjective,8
+příhodný,appropriate,adjective,8
+nepříhodný,inappropriate,adjective,8
+vhodný,suitable,adjective,8
+nevhodný,unsuitable,adjective,8
+potřebný,necessary,adjective,8
+nepotřebný,unnecessary,adjective,8
+zbytečný,needless,adjective,8
+nezbytný,indispensable,adjective,8
+povinný,mandatory,adjective,8
+dobrovolný,voluntary,adjective,8
+automatický,automatic,adjective,8
+manuální,manual,adjective,8
+ruční,handmade,adjective,8
+průmyslový,industrial,adjective,8
+zemědělský,agricultural,adjective,8
+přírodní,natural,adjective,8
+umělý,artificial,adjective,8
+syntetický,synthetic,adjective,8
+organický,organic,adjective,8
+anorganický,inorganic,adjective,8
+biologický,biological,adjective,8
+chemický,chemical,adjective,8
+fyzikální,physical,adjective,8
+mentální,mental,adjective,8
+psychologický,psychological,adjective,8
+emocionální,emotional,adjective,8
+racionální,rational,adjective,8
+iracionální,irrational,adjective,8
+logický,logical,adjective,8
+nelogický,illogical,adjective,8
+rozumný,reasonable,adjective,8
+nerozumný,unreasonable,adjective,8
+reálný,real,adjective,8
+nereálný,unreal,adjective,8
+skutečný,actual,adjective,8
+fiktivní,fictional,adjective,8
+imaginární,imaginary,adjective,8
+virtuální,virtual,adjective,8
+existující,existing,adjective,8
+neexistující,nonexistent,adjective,8
+aktivní,active,adjective,8
+pasivní,passive,adjective,8
+dynamický,dynamic,adjective,8
+statický,static,adjective,8
+pohyblivý,mobile,adjective,8
+nepohyblivý,immobile,adjective,8
+stálý,constant,adjective,8
+proměnlivý,variable,adjective,8
+stabilní,stable,adjective,8
+nestabilní,unstable,adjective,8
+konzistentní,consistent,adjective,8
+nekonzistentní,inconsistent,adjective,8
+jednotný,uniform,adjective,8
+různorodý,diverse,adjective,8
+homogenní,homogeneous,adjective,8
+heterogenní,heterogeneous,adjective,8
+symetrický,symmetric,adjective,8
+asymetrický,asymmetric,adjective,8
+proporcionální,proportional,adjective,8
+disproporcionální,disproportional,adjective,8
+equilibrium,balanced,adjective,8
+nevyvážený,unbalanced,adjective,8
+harmonický,harmonious,adjective,8
+disharmonický,disharmonious,adjective,8
+koordinovaný,coordinated,adjective,8
+nekoordinovaný,uncoordinated,adjective,8
+organizovaný,organized,adjective,8
+neorganizovaný,disorganized,adjective,8
+systematický,systematic,adjective,8
+chaotický,chaotic,adjective,8
+řádný,orderly,adjective,8
+nepořádný,disorderly,adjective,8
+čistý,neat,adjective,8
+špinavý,messy,adjective,8
+atmosféra,atmosphere,noun,9
+klima,climate,noun,9
+počasí,weather,noun,9
+teplotа,temperature,noun,9
+vlhkost,humidity,noun,9
+tlak,pressure,noun,9
+větrno,windy,noun,9
+orkán,hurricane,noun,9
+tornádo,tornado,noun,9
+tsunami,tsunami,noun,9
+zemětřesení,earthquake,noun,9
+sopka,volcano,noun,9
+erupce,eruption,noun,9
+lavina,avalanche,noun,9
+záplava,flood,noun,9
+sucho,drought,noun,9
+požár,fire,noun,9
+lesní požár,wildfire,noun,9
+katastrofa,disaster,noun,9
+kalamita,calamity,noun,9
+nehoda,accident,noun,9
+incident,incident,noun,9
+událost,event,noun,9
+situace,situation,noun,9
+okolnost,circumstance,noun,9
+podmínka,condition,noun,9
+kontext,context,noun,9
+prostředí,environment,noun,9
+ekosystém,ecosystem,noun,9
+biom,biome,noun,9
+habitat,habitat,noun,9
+příroda,nature,noun,9
+krajina,landscape,noun,9
+terén,terrain,noun,9
+povrch,surface,noun,9
+půda,soil,noun,9
+země,earth,noun,9
+glóbus,globe,noun,9
+planeta,planet,noun,9
+hvězda,star,noun,9
+galaxie,galaxy,noun,9
+vesmír,universe,noun,9
+kosmos,cosmos,noun,9
+sluneční soustava,solar system,noun,9
+oběžná dráha,orbit,noun,9
+satelit,satellite,noun,9
+komet,comet,noun,9
+asteroid,asteroid,noun,9
+meteor,meteor,noun,9
+meteorit,meteorite,noun,9
+konstelace,constellation,noun,9
+astronomie,astronomy,noun,9
+astrologie,astrology,noun,9
+astrofyzika,astrophysics,noun,9
+kosmologie,cosmology,noun,9
+gravitace,gravity,noun,9
+hmotnost,mass,noun,9
+váha,weight,noun,9
+hustota,density,noun,9
+objem,volume,noun,9
+kapacita,capacity,noun,9
+plocha,area,noun,9
+rozloha,extent,noun,9
+vzdálenost,distance,noun,9
+délka,length,noun,9
+šířka,width,noun,9
+výška,height,noun,9
+hloubka,depth,noun,9
+poloměr,radius,noun,9
+průměr,diameter,noun,9
+obvod,circumference,noun,9
+perimetr,perimeter,noun,9
+úhel,angle,noun,9
+bod,point,noun,9
+čára,line,noun,9
+segment,segment,noun,9
+křivka,curve,noun,9
+oblouk,arc,noun,9
+kruh,circle,noun,9
+elipsa,ellipse,noun,9
+ovál,oval,noun,9
+čtverec,square,noun,9
+obdélník,rectangle,noun,9
+trojúhelník,triangle,noun,9
+polygon,polygon,noun,9
+mnohoúhelník,polyhedron,noun,9
+koule,sphere,noun,9
+válec,cylinder,noun,9
+kužel,cone,noun,9
+pyramida,pyramid,noun,9
+kvádr,cuboid,noun,9
+krychle,cube,noun,9
+geometrie,geometry,noun,9
+aritmetika,arithmetic,noun,9
+algebra,algebra,noun,9
+kalkulus,calculus,noun,9
+statistika,statistics,noun,9
+pravděpodobnost,probability,noun,9
+rovnice,equation,noun,9
+formule,formula,noun,9
+funkce,function,noun,9
+proměnná,variable,noun,9
+konstanta,constant,noun,9
+koeficient,coefficient,noun,9
+exponent,exponent,noun,9
+logaritmus,logarithm,noun,9
+derivace,derivative,noun,9
+integrál,integral,noun,9
+limit,limit,noun,9
+nekonečno,infinity,noun,9
+nula,zero,noun,9
+jednotka,unit,noun,9
+pár,pair,noun,9
+dvojice,couple,noun,9
+trojice,triple,noun,9
+čtveřice,quartet,noun,9
+desítka,dozen,noun,9
+tucet,dozen,noun,9
+sto,hundred,noun,9
+tisíc,thousand,noun,9
+milión,million,noun,9
+miliarda,billion,noun,9
+bilion,trillion,noun,9
+číslic,digit,noun,9
+celé číslo,integer,noun,9
+desetinné číslo,decimal,noun,9
+zlomek,fraction,noun,9
+procento,percentage,noun,9
+poměr,ratio,noun,9
+proporce,proportion,noun,9
+sčítání,addition,noun,9
+odčítání,subtraction,noun,9
+násobení,multiplication,noun,9
+dělení,division,noun,9
+mocnina,power,noun,9
+odmocnina,root,noun,9
+kvadrát,square,noun,9
+kořen,root,noun,9
+průměr,average,noun,9
+medián,median,noun,9
+mód,mode,noun,9
+rozsah,range,noun,9
+odchylka,deviation,noun,9
+variance,variance,noun,9
+korelace,correlation,noun,9
+regrese,regression,noun,9
+distribuce,distribution,noun,9
+normální rozdělení,normal distribution,noun,9
+graf,graph,noun,9
+diagram,diagram,noun,9
+tabulka,table,noun,9
+matice,matrix,noun,9
+vektor,vector,noun,9
+skalar,scalar,noun,9
+množina,set,noun,9
+prvek,element,noun,9
+členství,membership,noun,9
+podmnožina,subset,noun,9
+průnik,intersection,noun,9
+sjednocení,union,noun,9
+rozdíl,difference,noun,9
+komplement,complement,noun,9
+logika,logic,noun,9
+výrok,statement,noun,9
+premisa,premise,noun,9
+závěr,conclusion,noun,9
+argument,argument,noun,9
+důkaz,proof,noun,9
+hypotéza,hypothesis,noun,9
+teze,thesis,noun,9
+antiteze,antithesis,noun,9
+syntéza,synthesis,noun,9
+analýza,analysis,noun,9
+syntéza,synthesis,noun,9
+indukce,induction,noun,9
+dedukce,deduction,noun,9
+abdukce,abduction,noun,9
+sylogismus,syllogism,noun,9
+paradox,paradox,noun,9
+dilemma,dilemma,noun,9
+ambivalence,ambivalence,noun,9
+dualita,duality,noun,9
+polarita,polarity,noun,9
+kontrast,contrast,noun,9
+opozice,opposition,noun,9
+konflikt,conflict,noun,9
+harmonie,harmony,noun,9
+rovnováha,balance,noun,9
+symetrie,symmetry,noun,9
+proporce,proportion,noun,9
+měřítko,scale,noun,9
+perspektiva,perspective,noun,9
+úhel pohledu,viewpoint,noun,9
+interpretace,interpretation,noun,9
+význam,meaning,noun,9
+definice,definition,noun,9
+pojem,concept,noun,9
+kategorie,category,noun,9
+třída,class,noun,9
+typ,type,noun,9
+druh,kind,noun,9
+odrůda,variety,noun,9
+varianta,variant,noun,9
+verze,version,noun,9
+model,model,noun,9
+vzor,pattern,noun,9
+šablona,template,noun,9
+standard,standard,noun,9
+norma,norm,noun,9
+kritérium,criterion,noun,9
+měřítko,measure,noun,9
+metrika,metric,noun,9
+parametr,parameter,noun,9
+charakteristika,characteristic,noun,9
+vlastnost,property,noun,9
+atribut,attribute,noun,9
+kvalita,quality,noun,9
+kvantita,quantity,noun,9
+intenzita,intensity,noun,9
+magnituda,magnitude,noun,9
+stupeň,degree,noun,9
+míra,extent,noun,9
+úroveň,level,noun,9
+etapa,stage,noun,9
+fáze,phase,noun,9
+stav,state,noun,9
+postavení,status,noun,9
+pozice,position,noun,9
+lokace,location,noun,9
+místo,place,noun,9
+prostor,space,noun,9
+oblast,area,noun,9
+region,region,noun,9
+zóna,zone,noun,9
+sektor,sector,noun,9
+segmento,segment,noun,9
+část,section,noun,9
+divize,division,noun,9
+oddělení,department,noun,9
+pobočka,branch,noun,9
+filiálka,subsidiary,noun,9
+agentura,agency,noun,9
+organizace,organization,noun,9
+instituce,institution,noun,9
+korporace,corporation,noun,9
+společnost,company,noun,9
+podnik,enterprise,noun,9
+firma,firm,noun,9
+obchod,business,noun,9
+průmysl,industry,noun,9
+výroba,manufacturing,noun,9
+produkce,production,noun,9
+produkt,product,noun,9
+výrobek,product,noun,9
+zboží,goods,noun,9
+služba,service,noun,9
+komodita,commodity,noun,9
+artikl,article,noun,9
+položka,item,noun,9
+kus,piece,noun,9
+jednotka,unit,noun,9
+balení,package,noun,9
+obal,packaging,noun,9
+kontejner,container,noun,9
+krabice,box,noun,9
+bedna,crate,noun,9
+pytel,sack,noun,9
+taška,bag,noun,9
+koš,basket,noun,9
+sud,barrel,noun,9
+barel,barrel,noun,9
+láhev,bottle,noun,9
+plechovka,can,noun,9
+dóza,jar,noun,9
+hrnek,mug,noun,9
+šálek,cup,noun,9
+sklenice,glass,noun,9
+pohár,goblet,noun,9
+talíř,plate,noun,9
+miska,bowl,noun,9
+podnos,tray,noun,9
+příbor,cutlery,noun,9
+nůž,knife,noun,9
+vidlička,fork,noun,9
+lžíce,spoon,noun,9
+lžička,teaspoon,noun,9
+nůžky,scissors,noun,9
+sekáček,cleaver,noun,9
+škrabka,scraper,noun,9
+otvírák,opener,noun,9
+korkový vývrtka,corkscrew,noun,9
+struhadlo,grater,noun,9
+prkénko,cutting board,noun,9
+váleček,rolling pin,noun,9
+metla,broom,noun,9
+koště,broom,noun,9
+kartáč,brush,noun,9
+hadr,cloth,noun,9
+utěrka,towel,noun,9
+mycí houba,sponge,noun,9
+mop,mop,noun,9
+kbelík,bucket,noun,9
+kanta,canister,noun,9
+káď,tub,noun,9
+vana,bathtub,noun,9
+sprcha,shower,noun,9
+umyvadlo,sink,noun,9
+toaleta,toilet,noun,9
+záchod,restroom,noun,9
+kohoutek,faucet,noun,9
+kohout,tap,noun,9
+trubka,pipe,noun,9
+hadice,hose,noun,9
+ventil,valve,noun,9
+čerpadlo,pump,noun,9
+filtr,filter,noun,9
+topení,heating,noun,9
+radiátor,radiator,noun,9
+klimatizace,air conditioning,noun,9
+větrání,ventilation,noun,9
+ventilátor,fan,noun,9
+komín,chimney,noun,9
+krb,fireplace,noun,9
+kamna,stove,noun,9
+trouba,oven,noun,9
+sporák,cooker,noun,9
+mikrovlnka,microwave,noun,9
+lednička,refrigerator,noun,9
+mraznička,freezer,noun,9
+myčka,dishwasher,noun,9
+pračka,washing machine,noun,9
+sušička,dryer,noun,9
+žehlička,iron,noun,9
+vysavač,vacuum cleaner,noun,9
+robotický vysavač,robot vacuum,noun,9
+mixér,blender,noun,9
+robot,food processor,noun,9
+kávovar,coffee maker,noun,9
+konvice,kettle,noun,9
+toaster,toaster,noun,9
+gril,grill,noun,9
+barbecue,barbecue,noun,9
+pánev,pan,noun,9
+hrnec,pot,noun,9
+kastrol,saucepan,noun,9
+pekáč,baking dish,noun,9
+forma,mold,noun,9
+síto,sieve,noun,9
+cedník,strainer,noun,9
+naběračka,ladle,noun,9
+obracečka,spatula,noun,9
+šlehač,whisk,noun,9
+vařečka,wooden spoon,noun,9
+kleště,tongs,noun,9
+pinzeta,tweezers,noun,9
+lopatka,spatula,noun,9
+lopata,shovel,noun,9
+rýč,spade,noun,9
+motyka,hoe,noun,9
+hrábě,rake,noun,9
+kosa,scythe,noun,9
+sekera,axe,noun,9
+pila,saw,noun,9
+kladivo,hammer,noun,9
+šroubovák,screwdriver,noun,9
+klíč,wrench,noun,9
+kleště,pliers,noun,9
+vrták,drill,noun,9
+vrtačka,drill machine,noun,9
+hoblík,plane,noun,9
+pilník,file,noun,9
+brus,grindstone,noun,9
+brousek,sharpener,noun,9
+měřítko,ruler,noun,9
+pravítko,straightedge,noun,9
+úhelník,square,noun,9
+kružítko,compass,noun,9
+měřidlo,measuring device,noun,9
+váha,scale,noun,9
+teploměr,thermometer,noun,9
+barometr,barometer,noun,9
+hodiny,clock,noun,9
+hodinky,watch,noun,9
+stopky,stopwatch,noun,9
+časovač,timer,noun,9
+budík,alarm clock,noun,9
+kalendář,calendar,noun,9
+diář,diary,noun,9
+notes,notepad,noun,9
+deník,journal,noun,9
+blok,pad,noun,9
+zápisník,notebook,noun,9
+složka,folder,noun,9
+desky,binder,noun,9
+obálka,envelope,noun,9
+známka,stamp,noun,9
+balík,parcel,noun,9
+balíček,packet,noun,9
+zásilka,shipment,noun,9
+náklad,cargo,noun,9
+fracht,freight,noun,9
+doprava,transport,noun,9
+přeprava,transportation,noun,9
+logistika,logistics,noun,9
+distribuce,distribution,noun,9
+dodávka,delivery,noun,9
+dodání,supply,noun,9
+zásobování,provisioning,noun,9
+sklad,warehouse,noun,9
+skladiště,storage,noun,9
+depot,depot,noun,9
+terminál,terminal,noun,9
+přístav,port,noun,9
+dokument,document,noun,10
+osvědčení,certificate,noun,10
+licence,license,noun,10
+povolení,permit,noun,10
+víza,visa,noun,10
+pas,passport,noun,10
+průkaz,ID card,noun,10
+řidičák,driver license,noun,10
+registrace,registration,noun,10
+formulář,form,noun,10
+žádost,application,noun,10
+dotazník,questionnaire,noun,10
+anketa,survey,noun,10
+výzkum,research,noun,10
+studie,study,noun,10
+zpráva,report,noun,10
+analýza,analysis,noun,10
+posouzení,assessment,noun,10
+hodnocení,evaluation,noun,10
+recenze,review,noun,10
+kritika,critique,noun,10
+komentář,comment,noun,10
+poznámka,remark,noun,10
+anotace,annotation,noun,10
+vysvětlení,explanation,noun,10
+popis,description,noun,10
+specifikace,specification,noun,10
+instrukce,instruction,noun,10
+návod,manual,noun,10
+příručka,handbook,noun,10
+průvodce,guide,noun,10
+referenční materiál,reference,noun,10
+zdroj,source,noun,10
+původ,origin,noun,10
+genealogie,genealogy,noun,10
+rodokmen,family tree,noun,10
+předek,ancestor,noun,10
+potomek,descendant,noun,10
+generace,generation,noun,10
+dědictví,heritage,noun,10
+odkaz,legacy,noun,10
+tradice,tradition,noun,10
+zvyk,custom,noun,10
+obyčej,habit,noun,10
+rituál,ritual,noun,10
+ceremonie,ceremony,noun,10
+obřad,rite,noun,10
+slavnost,celebration,noun,10
+festival,festival,noun,10
+svátek,holiday,noun,10
+oslava,celebration,noun,10
+párty,party,noun,10
+recepce,reception,noun,10
+večírek,party,noun,10
+banketu,banquet,noun,10
+hostina,feast,noun,10
+piknik,picnic,noun,10
+grilovačka,barbecue,noun,10
+oběd,lunch,noun,10
+večeře,dinner,noun,10
+snídaně,breakfast,noun,10
+svačina,snack,noun,10
+předkrm,appetizer,noun,10
+hlavní chod,main course,noun,10
+dezert,dessert,noun,10
+pochoutka,delicacy,noun,10
+specialita,specialty,noun,10
+delikatesa,delicacy,noun,10
+pokrm,dish,noun,10
+jídlo,meal,noun,10
+strava,diet,noun,10
+výživa,nutrition,noun,10
+kaloriya,calorie,noun,10
+vitamín,vitamin,noun,10
+mineral,mineral,noun,10
+živina,nutrient,noun,10
+protein,protein,noun,10
+bílkovina,protein,noun,10
+sacharid,carbohydrate,noun,10
+cukr,sugar,noun,10
+glukóza,glucose,noun,10
+fruktóza,fructose,noun,10
+laktóza,lactose,noun,10
+tuk,fat,noun,10
+lipid,lipid,noun,10
+olej,oil,noun,10
+tuky,fats,noun,10
+cholesterol,cholesterol,noun,10
+vláknina,fiber,noun,10
+voda,water,noun,10
+tekutina,fluid,noun,10
+šťáva,juice,noun,10
+nápoj,beverage,noun,10
+alkohol,alcohol,noun,10
+víno,wine,noun,10
+pivo,beer,noun,10
+likér,liqueur,noun,10
+koktejl,cocktail,noun,10
+šampus,champagne,noun,10
+whisky,whiskey,noun,10
+vodka,vodka,noun,10
+rum,rum,noun,10
+gin,gin,noun,10
+brandy,brandy,noun,10
+koňak,cognac,noun,10
+aperitiv,aperitif,noun,10
+digestiv,digestif,noun,10
+koření,spice,noun,10
+bylina,herb,noun,10
+sůl,salt,noun,10
+pepř,pepper,noun,10
+cukr,sugar,noun,10
+med,honey,noun,10
+sirup,syrup,noun,10
+marmeláda,jam,noun,10
+džem,jam,noun,10
+kompot,compote,noun,10
+omáčka,sauce,noun,10
+dressing,dressing,noun,10
+majonéza,mayonnaise,noun,10
+kečup,ketchup,noun,10
+hořčice,mustard,noun,10
+octový,vinegar,noun,10
+olej,oil,noun,10
+máslo,butter,noun,10
+smetana,cream,noun,10
+jogurt,yogurt,noun,10
+zakysaná smetana,sour cream,noun,10
+tvaroh,cottage cheese,noun,10
+sýr,cheese,noun,10
+plísňový sýr,blue cheese,noun,10
+parmezán,parmesan,noun,10
+mozzarella,mozzarella,noun,10
+cheddar,cheddar,noun,10
+brie,brie,noun,10
+camembert,camembert,noun,10
+feta,feta,noun,10
+tofu,tofu,noun,10
+tempeh,tempeh,noun,10
+seitan,seitan,noun,10
+quinoa,quinoa,noun,10
+bulgur,bulgur,noun,10
+kuskus,couscous,noun,10
+rýže,rice,noun,10
+těstoviny,pasta,noun,10
+nudle,noodles,noun,10
+špagety,spaghetti,noun,10
+makarony,macaroni,noun,10
+lasagne,lasagna,noun,10
+ravioli,ravioli,noun,10
+pizza,pizza,noun,10
+burger,burger,noun,10
+sendvič,sandwich,noun,10
+hot dog,hot dog,noun,10
+taco,taco,noun,10
+burrito,burrito,noun,10
+kebab,kebab,noun,10
+šiš kebab,shish kebab,noun,10
+sushi,sushi,noun,10
+sashimi,sashimi,noun,10
+tempura,tempura,noun,10
+curry,curry,noun,10
+chilli,chili,noun,10
+guláš,goulash,noun,10
+polévka,soup,noun,10
+bujón,broth,noun,10
+vývar,stock,noun,10
+omelet,omelet,noun,10
+míchaná vajíčka,scrambled eggs,noun,10
+volské oko,fried egg,noun,10
+vejce naměkko,soft boiled egg,noun,10
+vejce natvrdo,hard boiled egg,noun,10
+pochované vejce,poached egg,noun,10
+quiche,quiche,noun,10
+suflé,souffle,noun,10
+crepes,crepes,noun,10
+palačinky,pancakes,noun,10
+vafle,waffles,noun,10
+toast,toast,noun,10
+bagel,bagel,noun,10
+croissant,croissant,noun,10
+muffin,muffin,noun,10
+bábovka,bundt cake,noun,10
+dort,cake,noun,10
+koláč,pie,noun,10
+tart,tart,noun,10
+cheesecake,cheesecake,noun,10
+brownie,brownie,noun,10
+sušenka,cookie,noun,10
+biskvit,biscuit,noun,10
+cracker,cracker,noun,10
+preclík,pretzel,noun,10
+čipsy,chips,noun,10
+popcorn,popcorn,noun,10
+oříšky,nuts,noun,10
+mandle,almonds,noun,10
+vlašské ořechy,walnuts,noun,10
+lískové ořechy,hazelnuts,noun,10
+kešu,cashews,noun,10
+pistácie,pistachios,noun,10
+arašídy,peanuts,noun,10
+semínka,seeds,noun,10
+slunečnicová semínka,sunflower seeds,noun,10
+dýňová semínka,pumpkin seeds,noun,10
+chia semínka,chia seeds,noun,10
+lněná semínka,flax seeds,noun,10
+sezam,sesame,noun,10
+mák,poppy seeds,noun,10
+rozinky,raisins,noun,10
+sušené ovoce,dried fruit,noun,10
+datle,dates,noun,10
+fíky,figs,noun,10
+švestky,prunes,noun,10
+meruňky,apricots,noun,10
+broskve,peaches,noun,10
+nektarinky,nectarines,noun,10
+třešně,cherries,noun,10
+višně,sour cherries,noun,10
+jahody,strawberries,noun,10
+maliny,raspberries,noun,10
+ostružiny,blackberries,noun,10
+borůvky,blueberries,noun,10
+brusnice,cranberries,noun,10
+rybíz,currants,noun,10
+angrešt,gooseberries,noun,10
+šípky,rose hips,noun,10
+hrozny,grapes,noun,10
+vodní meloun,watermelon,noun,10
+meloun,melon,noun,10
+ananas,pineapple,noun,10
+mango,mango,noun,10
+papaya,papaya,noun,10
+maracuja,passion fruit,noun,10
+kiwi,kiwi,noun,10
+granátové jablko,pomegranate,noun,10
+citron,lemon,noun,10
+limetka,lime,noun,10
+grapefruit,grapefruit,noun,10
+mandarinka,tangerine,noun,10
+klementinka,clementine,noun,10
+avokádo,avocado,noun,10
+okurka,cucumber,noun,10
+cuketa,zucchini,noun,10
+dýně,pumpkin,noun,10
+lilek,eggplant,noun,10
+paprika,pepper,noun,10
+chilli paprika,chili pepper,noun,10
+brokolice,broccoli,noun,10
+květák,cauliflower,noun,10
+zelí,cabbage,noun,10
+kapusta,kale,noun,10
+špenát,spinach,noun,10
+mangold,chard,noun,10
+rukola,arugula,noun,10
+hlávkový salát,lettuce,noun,10
+ledový salát,iceberg lettuce,noun,10
+řeřicha,watercress,noun,10
+pažitka,chives,noun,10
+petržel,parsley,noun,10
+koriandr,cilantro,noun,10
+bazalka,basil,noun,10
+tymián,thyme,noun,10
+rozmarýn,rosemary,noun,10
+oregano,oregano,noun,10
+šalvěj,sage,noun,10
+máta,mint,noun,10
+meduňka,lemon balm,noun,10
+fenykl,fennel,noun,10
+anýz,anise,noun,10
+kmín,caraway,noun,10
+koriandrové semeno,coriander seeds,noun,10
+hřebíček,cloves,noun,10
+skořice,cinnamon,noun,10
+muškátový oříšek,nutmeg,noun,10
+zázvor,ginger,noun,10
+kurkuma,turmeric,noun,10
+šafrán,saffron,noun,10
+kardamom,cardamom,noun,10
+bobkový list,bay leaf,noun,10
+vanilka,vanilla,noun,10
+kakao,cocoa,noun,10
+čokoláda,chocolate,noun,10
+mléčná čokoláda,milk chocolate,noun,10
+hořká čokoláda,dark chocolate,noun,10
+bílá čokoláda,white chocolate,noun,10
+pralinky,pralines,noun,10
+bonbóny,candies,noun,10
+želé,jelly,noun,10
+karamely,caramels,noun,10
+lízátko,lollipop,noun,10
+žvýkačka,chewing gum,noun,10
+zmrzlina,ice cream,noun,10
+sorbet,sorbet,noun,10
+led,ice,noun,10
+mrazená potravina,frozen food,noun,10
+konzervované jídlo,canned food,noun,10
+konzerva,can,noun,10
+zavařenina,preserve,noun,10
+nakládané,pickled,noun,10
+fermentované,fermented,noun,10
+uzené,smoked,noun,10
+sušené,dried,noun,10
+syrové,raw,noun,10
+vařené,cooked,noun,10
+pečené,baked,noun,10
+smažené,fried,noun,10
+grilované,grilled,noun,10
+dušené,steamed,noun,10
+vařené v páře,steamed,noun,10
+restované,sautéed,noun,10
+marinované,marinated,noun,10
+glazované,glazed,noun,10
+karamelizované,caramelized,noun,10
+kořeněné,spiced,noun,10
+ochucené,flavored,noun,10
+slazené,sweetened,noun,10
+neslazené,unsweetened,noun,10
+solené,salted,noun,10
+nesolené,unsalted,noun,10
+kořeněné,spicy,adjective,10
+pikantní,piquant,adjective,10
+pálivé,hot,adjective,10
+jemné,mild,adjective,10
+kyselé,sour,adjective,10
+hořké,bitter,adjective,10
+sladké,sweet,adjective,10
+slané,salty,adjective,10
+umami,savory,adjective,10
+chutné,tasty,adjective,10
+lahodné,delicious,adjective,10
+výborné,excellent,adjective,10
+vynikající,outstanding,adjective,10
+nechutné,disgusting,adjective,10
+odporné,repulsive,adjective,10
+mdlé,bland,adjective,10
+fádní,tasteless,adjective,10
+vkusné,tasteful,adjective,10
+nevkusné,tasteless,adjective,10
+křupavé,crispy,adjective,10
+křehké,crispy,adjective,10
+vláčné,moist,adjective,10
+suché,dry,adjective,10
+šťavnaté,juicy,adjective,10
+měkké,soft,adjective,10
+tuhé,firm,adjective,10
+houževnaté,chewy,adjective,10
+husté,thick,adjective,10
+řídké,thin,adjective,10
+krémové,creamy,adjective,10
+hladké,smooth,adjective,10
+hrudkovité,lumpy,adjective,10
+mastné,greasy,adjective,10
+tučné,fatty,adjective,10
+štíhlé,lean,adjective,10
+dietní,diet,adjective,10
+lehké,light,adjective,10
+těžké,heavy,adjective,10
+plné,rich,adjective,10
+jednoduché,simple,adjective,10
+aromatické,aromatic,adjective,10
+vonné,fragrant,adjective,10
+páchnoucí,smelly,adjective,10
+zápach,stink,noun,10
+aróma,aroma,noun,10
+vůně,fragrance,noun,10
+parfém,perfume,noun,10
+kolínská voda,cologne,noun,10
+deodorant,deodorant,noun,10
+mýdlo,soap,noun,10
+šampon,shampoo,noun,10
+kondicionér,conditioner,noun,10
+gel do sprchy,shower gel,noun,10
+tělové mléko,body lotion,noun,10
+krém,cream,noun,10
+pleťová voda,toner,noun,10
+sérum,serum,noun,10
+maska,mask,noun,10
+peeling,scrub,noun,10
+makeup,makeup,noun,10
+make-up,make up,noun,10
+pudr,powder,noun,10
+foundation,foundation,noun,10
+concealer,concealer,noun,10
+rtěnka,lipstick,noun,10
+lesk na rty,lip gloss,noun,10
+oční stíny,eyeshadow,noun,10
+tužka na oči,eyeliner,noun,10
+řasenka,mascara,noun,10
+tužka na obočí,eyebrow pencil,noun,10
+bronzer,bronzer,noun,10
+tvářenka,blush,noun,10
+highlighter,highlighter,noun,10
+lak na nehty,nail polish,noun,10
+odlakovač,nail polish remover,noun,10
+pilník,nail file,noun,10
+kleštičky,nail clippers,noun,10
+pinzeta,tweezers,noun,10
+hřeben,comb,noun,10
+kartáč,brush,noun,10
+fén,hair dryer,noun,10
+žehlička na vlasy,hair straightener,noun,10
+kulma,curling iron,noun,10
+elektrický holicí strojek,electric shaver,noun,10
+holící strojek,razor,noun,10
+pěna na holení,shaving foam,noun,10
+balzám po holení,aftershave,noun,10
+zubní kartáček,toothbrush,noun,10
+zubní pasta,toothpaste,noun,10
+ústní voda,mouthwash,noun,10
+zubní nit,dental floss,noun,10
+kartáček na jazyk,tongue scraper,noun,10
+hygiena,hygiene,noun,10
+čistota,cleanliness,noun,10
+zdraví,health,noun,10
+nemoc,disease,noun,10
+choroba,illness,noun,10
+infekce,infection,noun,10
+virus,virus,noun,10
+bakterie,bacteria,noun,10
+mikrob,microbe,noun,10
+patogen,pathogen,noun,10
+zánětat,inflammation,noun,10
+alergie,allergy,noun,10
+astma,asthma,noun,10
+cukrovka,diabetes,noun,10
+rakovina,cancer,noun,10
+nádor,tumor,noun,10
+srdeční choroba,heart disease,noun,10
+infarkt,heart attack,noun,10
+mrtvice,stroke,noun,10
+hypertenze,hypertension,noun,10
+hypotenze,hypotension,noun,10
+cholesterol,cholesterol,noun,10
+artritida,arthritis,noun,10
+osteoporóza,osteoporosis,noun,10
+migréna,migraine,noun,10
+bolest hlavy,headache,noun,10
+bolest,pain,noun,10
+zranění,injury,noun,10
+zlomenina,fracture,noun,10
+vykloubení,dislocation,noun,10
+podvrtnutí,sprain,noun,10
+natažení,strain,noun,10
+řezná rána,cut,noun,10
+odřenina,abrasion,noun,10
+modřina,bruise,noun,10
+popálenina,burn,noun,10
+omrzlina,frostbite,noun,10
+jizva,scar,noun,10
+boule,bump,noun,10
+otok,swelling,noun,10
+vyrážka,rash,noun,10
+svědění,itch,noun,10
+pálení,burning,noun,10
+znecitlivění,numbness,noun,10
+mravenčení,tingling,noun,10
+závrať,dizziness,noun,10
+nevolnost,nausea,noun,10
+horečka,fever,noun,10
+zimnice,chills,noun,10
+potení,sweating,noun,10
+únava,fatigue,noun,10
+slabost,weakness,noun,10
+vyčerpání,exhaustion,noun,10
+nespavost,insomnia,noun,10
+deprese,depression,noun,10
+anxieta,anxiety,noun,10
+stres,stress,noun,10
+trauma,trauma,noun,10
+šok,shock,noun,10
+lék,medicine,noun,10
+medikace,medication,noun,10
+prášek,pill,noun,10
+tableta,tablet,noun,10
+kapsula,capsule,noun,10
+sirup,syrup,noun,10
+kapky,drops,noun,10
+injekce,injection,noun,10
+infúze,infusion,noun,10
+mast,ointment,noun,10
+krém,cream,noun,10
+náplast,patch,noun,10
+obvaz,bandage,noun,10
+stehy,stitches,noun,10
+sádra,plaster cast,noun,10
+berle,crutches,noun,10
+invalidní vozík,wheelchair,noun,10
+nosítka,stretcher,noun,10
+ambulance,ambulance,noun,10
+pohotovost,emergency room,noun,10
+operace,surgery,noun,10
+chirurgie,surgery,noun,10
+anestezie,anesthesia,noun,10
+narkóza,anesthesia,noun,10
+transfúze,transfusion,noun,10
+transplantace,transplant,noun,10
+rehabilitace,rehabilitation,noun,10
+fyzioterapie,physiotherapy,noun,10
+masáž,massage,noun,10
+akupunktura,acupuncture,noun,10
+terapie,therapy,noun,10
+poradce,counselor,noun,10
+psycholog,psychologist,noun,10
+psychiatr,psychiatrist,noun,10
+terapeut,therapist,noun,10
+porodní asistentka,midwife,noun,10
+dentista,dentist,noun,10
+ortodontista,orthodontist,noun,10
+optometrista,optometrist,noun,10
+dermatolog,dermatologist,noun,10
+kardiolog,cardiologist,noun,10
+neurolog,neurologist,noun,10
+onkolog,oncologist,noun,10
+pediatr,pediatrician,noun,10
+gynekolog,gynecologist,noun,10
+urolog,urologist,noun,10
+endokrinolog,endocrinologist,noun,10
+gastroenterolog,gastroenterologist,noun,10
+otorinolaryngolog,otolaryngologist,noun,10
+oftalmolog,ophthalmologist,noun,10
+ortoped,orthopedist,noun,10
+anesteziolog,anesthesiologist,noun,10
+radiolog,radiologist,noun,10
+patolog,pathologist,noun,10
+farmaceut,pharmacist,noun,10
+zdravotní sestra,nurse,noun,10
+ošetřovatel,caregiver,noun,10
+paramedik,paramedic,noun,10
+technický asistent,technician,noun,10
+laborant,laboratory technician,noun,10
+rentgenolog,radiographer,noun,10
+nutriční poradce,nutritionist,noun,10
+dietetik,dietician,noun,10

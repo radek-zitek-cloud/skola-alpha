@@ -1,10 +1,11 @@
 """API routers for authentication."""
 
 import logging
+import random
 from datetime import timedelta
 
 import httpx
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Query
 from sqlalchemy.orm import Session
 from sqlalchemy.sql.expression import func
 
@@ -16,8 +17,16 @@ from app.auth import (
     get_current_user,
 )
 from app.database import get_db
-from app.models import User, Vocabulary
-from app.schemas import GoogleAuthRequest, OAuthConfig, Token, UserResponse, VocabularyResponse
+from app.models import User, Vocabulary, WordAttempt
+from app.schemas import (
+    GoogleAuthRequest,
+    OAuthConfig,
+    Token,
+    UserResponse,
+    VocabularyFilters,
+    VocabularyResponse,
+    WordAttemptCreate,
+)
 
 logger = logging.getLogger(__name__)
 router = APIRouter()
@@ -173,15 +182,120 @@ def auth_config():
     return {"google_client_id": GOOGLE_CLIENT_ID}
 
 
-@router.get("/vocabulary/random", response_model=VocabularyResponse, tags=["vocabulary"])
-def get_random_word(
+@router.get("/vocabulary/filters", response_model=VocabularyFilters, tags=["vocabulary"])
+def get_vocabulary_filters(
     current_user: User = Depends(get_current_user), db: Session = Depends(get_db)
 ):
-    """Get a random vocabulary word pair."""
-    word = db.query(Vocabulary).order_by(func.random()).first()
+    """Get available categories and levels for filtering."""
+    categories = [
+        r[0]
+        for r in db.query(Vocabulary.category)
+        .distinct()
+        .filter(Vocabulary.category.isnot(None))
+        .all()
+    ]
+    levels = [
+        r[0]
+        for r in db.query(Vocabulary.level)
+        .distinct()
+        .filter(Vocabulary.level.isnot(None))
+        .all()
+    ]
+    
+    # Get all valid combinations
+    combinations = [
+        {"category": r[0], "level": r[1]}
+        for r in db.query(Vocabulary.category, Vocabulary.level)
+        .distinct()
+        .filter(Vocabulary.category.isnot(None))
+        .filter(Vocabulary.level.isnot(None))
+        .all()
+    ]
+    
+    return {
+        "categories": sorted(categories), 
+        "levels": sorted(levels),
+        "combinations": combinations
+    }
+
+
+@router.get("/vocabulary/random", response_model=VocabularyResponse, tags=["vocabulary"])
+def get_random_word(
+    categories: list[str] = Query(None),
+    levels: list[str] = Query(None),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """
+    Get a random vocabulary word pair, prioritized by user's typo history.
+    Words with more typos in the past have a higher chance of being selected.
+    """
+    # Query all words with their total typo count and attempt count for the current user
+    query = (
+        db.query(
+            Vocabulary,
+            func.coalesce(func.sum(WordAttempt.typo_count), 0).label("total_typos"),
+            func.count(WordAttempt.id).label("attempt_count"),
+        )
+        .outerjoin(
+            WordAttempt,
+            (Vocabulary.id == WordAttempt.word_id)
+            & (WordAttempt.user_id == current_user.id),
+        )
+    )
+
+    if categories:
+        query = query.filter(Vocabulary.category.in_(categories))
+    if levels:
+        query = query.filter(Vocabulary.level.in_(levels))
+
+    results = query.group_by(Vocabulary.id).all()
+
+    if not results:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="No vocabulary words found matching criteria",
+        )
+
+    words = []
+    weights = []
+
+    for word, total_typos, attempt_count in results:
+        words.append(word)
+
+        if attempt_count == 0:
+            # High priority for unseen words
+            weights.append(1000)
+        else:
+            # Base weight is 1. Add total_typos to increase probability for difficult words.
+            weights.append(1 + total_typos)
+
+    # Select one word based on weights
+    selected_word = random.choices(words, weights=weights, k=1)[0]
+
+    return selected_word
+
+
+@router.post("/vocabulary/attempt", status_code=status.HTTP_201_CREATED, tags=["vocabulary"])
+def record_attempt(
+    attempt: WordAttemptCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Record a user's attempt at a word."""
+    # Verify word exists
+    word = db.query(Vocabulary).filter(Vocabulary.id == attempt.word_id).first()
     if not word:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
-            detail="No vocabulary words found",
+            detail="Word not found",
         )
-    return word
+
+    db_attempt = WordAttempt(
+        user_id=current_user.id,
+        word_id=attempt.word_id,
+        typo_count=attempt.typo_count,
+    )
+    db.add(db_attempt)
+    db.commit()
+    return {"status": "success"}
