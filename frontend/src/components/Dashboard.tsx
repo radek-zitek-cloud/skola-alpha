@@ -51,6 +51,7 @@ export const Dashboard: React.FC = () => {
         fontFamily: "Inter, system-ui, -apple-system, sans-serif",
         padding: "24px",
         paddingTop: "88px", // Account for fixed header
+        boxSizing: "border-box",
       }}
     >
       <div

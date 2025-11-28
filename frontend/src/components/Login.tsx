@@ -115,6 +115,7 @@ export const Login: React.FC<LoginProps> = ({ onSuccess }) => {
         color: "#e2e8f0",
         fontFamily: "Inter, system-ui, -apple-system, sans-serif",
         padding: "24px",
+        boxSizing: "border-box",
       }}
     >
       <div
