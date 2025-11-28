@@ -48,7 +48,6 @@ export const Dashboard: React.FC = () => {
         justifyContent: "center",
         background: isDark ? "#0f172a" : "#f9fafb",
         color: isDark ? "#e2e8f0" : "#111827",
-        fontFamily: "Inter, system-ui, -apple-system, sans-serif",
         padding: "24px",
         paddingTop: "88px", // Account for fixed header
         boxSizing: "border-box",

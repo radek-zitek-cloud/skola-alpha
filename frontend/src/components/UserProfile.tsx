@@ -30,11 +30,15 @@ export const UserProfile: React.FC = () => {
           <img
             src={user.picture}
             alt={user.name || "User"}
+            referrerPolicy="no-referrer"
             style={{
               width: "40px",
               height: "40px",
               borderRadius: "50%",
               border: `2px solid ${isDark ? "#1f2937" : "#e5e7eb"}`,
+              flexShrink: 0,
+              objectFit: "cover",
+              display: "block",
             }}
           />
         )}
