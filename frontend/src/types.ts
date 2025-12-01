@@ -40,3 +40,21 @@ export interface VocabularyStatistics {
 }
 
 export type Theme = "light" | "dark";
+
+export interface Habit {
+  id: number;
+  user_id: number;
+  name: string;
+  created_at: string;
+  is_active: boolean;
+}
+
+export interface HabitHistoryResponse {
+  habit_id: number;
+  habit_name: string;
+  completions: string[];
+}
+
+export interface HabitCompletionToggle {
+  completion_date: string;
+}

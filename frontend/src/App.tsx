@@ -6,6 +6,7 @@ import { Dashboard } from "./components/Dashboard";
 import { StatusFooter } from "./components/StatusFooter";
 import { SpellingActivity } from "./components/SpellingActivity";
 import { MathActivity } from "./components/MathActivity";
+import { HabitTracker } from "./components/HabitTracker";
 
 function App() {
   const { user, isLoading } = useAuth();
@@ -53,8 +54,11 @@ function App() {
       {currentView === "math-activity" && (
         <MathActivity onBack={() => setCurrentView("dashboard")} />
       )}
+      {currentView === "habit-tracker" && (
+        <HabitTracker onBack={() => setCurrentView("dashboard")} />
+      )}
       {/* Fallback for unimplemented activities */}
-      {currentView !== "dashboard" && currentView !== "english-spelling" && (
+      {currentView !== "dashboard" && currentView !== "english-spelling" && currentView !== "math-activity" && currentView !== "habit-tracker" && (
         <div style={{ 
           minHeight: "100vh", 
           display: "flex", 

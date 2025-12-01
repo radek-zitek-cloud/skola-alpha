@@ -1,6 +1,6 @@
 """Pydantic schemas for API request/response models."""
 
-from datetime import datetime
+from datetime import date, datetime
 from typing import Optional
 
 from pydantic import BaseModel, EmailStr
@@ -129,3 +129,36 @@ class MathStatistics(BaseModel):
 
     total_attempts: int
     operations: dict[str, OperationStatistic]
+
+
+class HabitCreate(BaseModel):
+    """Schema for creating a habit."""
+
+    name: str
+
+
+class HabitResponse(BaseModel):
+    """Schema for habit response."""
+
+    id: int
+    user_id: int
+    name: str
+    created_at: datetime
+    is_active: bool
+
+    class Config:
+        from_attributes = True
+
+
+class HabitCompletionToggle(BaseModel):
+    """Schema for toggling habit completion for a specific date."""
+
+    completion_date: date
+
+
+class HabitHistoryResponse(BaseModel):
+    """Schema for habit completion history."""
+
+    habit_id: int
+    habit_name: str
+    completions: list[date]

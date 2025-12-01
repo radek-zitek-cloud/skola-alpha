@@ -2,7 +2,7 @@
 
 from datetime import datetime
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
+from sqlalchemy import Boolean, Column, Date, DateTime, ForeignKey, Integer, String
 
 from app.database import Base
 
@@ -60,3 +60,26 @@ class MathAttempt(Base):
     remainder = Column(Integer, nullable=True)
     max_number = Column(Integer, nullable=False)
     false_attempts = Column(Integer, default=0)
+
+
+class Habit(Base):
+    """Model for storing user habits."""
+
+    __tablename__ = "habits"
+
+    id = Column(Integer, primary_key=True, index=True)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    name = Column(String, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    is_active = Column(Boolean, default=True)
+
+
+class HabitCompletion(Base):
+    """Model for storing habit completions."""
+
+    __tablename__ = "habit_completions"
+
+    id = Column(Integer, primary_key=True, index=True)
+    habit_id = Column(Integer, ForeignKey("habits.id"), nullable=False)
+    completion_date = Column(Date, nullable=False)
+    created_at = Column(DateTime, default=datetime.utcnow)

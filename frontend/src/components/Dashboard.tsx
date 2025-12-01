@@ -27,6 +27,14 @@ const activities: Activity[] = [
     textColor: "#ffffff",
   },
   {
+    id: "habit-tracker",
+    subject: "Habits",
+    topic: "Track Progress",
+    icon: "✅",
+    color: "#8b5cf6", // Purple 500
+    textColor: "#ffffff",
+  },
+  {
     id: "czech-error",
     subject: "Czech",
     topic: "Find Error",

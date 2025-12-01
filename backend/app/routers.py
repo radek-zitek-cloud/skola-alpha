@@ -2,7 +2,7 @@
 
 import logging
 import random
-from datetime import timedelta
+from datetime import date, timedelta
 
 import httpx
 from fastapi import APIRouter, Depends, HTTPException, status, Query
@@ -17,9 +17,13 @@ from app.auth import (
     get_current_user,
 )
 from app.database import get_db
-from app.models import MathAttempt, User, Vocabulary, WordAttempt
+from app.models import Habit, HabitCompletion, MathAttempt, User, Vocabulary, WordAttempt
 from app.schemas import (
     GoogleAuthRequest,
+    HabitCompletionToggle,
+    HabitCreate,
+    HabitHistoryResponse,
+    HabitResponse,
     MathAttemptCreate,
     MathStatistics,
     OAuthConfig,
@@ -439,3 +443,111 @@ async def get_math_statistics(
         "total_attempts": total_attempts,
         "operations": operations_stats,
     }
+
+
+@router.post("/habits", response_model=HabitResponse, status_code=status.HTTP_201_CREATED, tags=["habits"])
+def create_habit(
+    habit: HabitCreate,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Create a new habit for the current user."""
+    db_habit = Habit(
+        user_id=current_user.id,
+        name=habit.name,
+    )
+    db.add(db_habit)
+    db.commit()
+    db.refresh(db_habit)
+    return db_habit
+
+
+@router.get("/habits", response_model=list[HabitResponse], tags=["habits"])
+def get_habits(
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Get all active habits for the current user."""
+    habits = db.query(Habit).filter(
+        Habit.user_id == current_user.id,
+        Habit.is_active == True
+    ).all()
+    return habits
+
+
+@router.post("/habits/{habit_id}/toggle", status_code=status.HTTP_200_OK, tags=["habits"])
+def toggle_habit_completion(
+    habit_id: int,
+    toggle: HabitCompletionToggle,
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Toggle habit completion for a specific date."""
+    # Verify habit exists and belongs to user
+    habit = db.query(Habit).filter(
+        Habit.id == habit_id,
+        Habit.user_id == current_user.id
+    ).first()
+
+    if not habit:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Habit not found",
+        )
+
+    # Check if completion already exists
+    existing = db.query(HabitCompletion).filter(
+        HabitCompletion.habit_id == habit_id,
+        HabitCompletion.completion_date == toggle.completion_date
+    ).first()
+
+    if existing:
+        # Remove completion (uncomplete)
+        db.delete(existing)
+        db.commit()
+        return {"status": "uncompleted", "date": toggle.completion_date}
+    else:
+        # Add completion
+        completion = HabitCompletion(
+            habit_id=habit_id,
+            completion_date=toggle.completion_date
+        )
+        db.add(completion)
+        db.commit()
+        return {"status": "completed", "date": toggle.completion_date}
+
+
+@router.get("/habits/{habit_id}/history", response_model=HabitHistoryResponse, tags=["habits"])
+def get_habit_history(
+    habit_id: int,
+    days: int = Query(default=35, ge=1, le=365),
+    current_user: User = Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    """Get habit completion history for the specified number of days."""
+    # Verify habit exists and belongs to user
+    habit = db.query(Habit).filter(
+        Habit.id == habit_id,
+        Habit.user_id == current_user.id
+    ).first()
+
+    if not habit:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Habit not found",
+        )
+
+    # Get completions for the last N days
+    start_date = date.today() - timedelta(days=days - 1)
+    completions = db.query(HabitCompletion.completion_date).filter(
+        HabitCompletion.habit_id == habit_id,
+        HabitCompletion.completion_date >= start_date
+    ).all()
+
+    completion_dates = [c[0] for c in completions]
+
+    return HabitHistoryResponse(
+        habit_id=habit.id,
+        habit_name=habit.name,
+        completions=completion_dates
+    )
